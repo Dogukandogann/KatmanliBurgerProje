@@ -1,14 +1,12 @@
 ﻿using KatmanliBurger_DAL.Abstract.Base;
 using KatmanliBurger_DATA.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KatmanliBurger_DAL.Abstract
 {
     public interface IBurgerGarnitureMappingDal : IBaseDal<BurgerGarnitureMapping>
     {
+        void Craete(IEnumerable<BurgerGarnitureMapping> entities);
+        void Update(IEnumerable<BurgerGarnitureMapping> entities);
+        IEnumerable<BurgerGarnitureMapping> GetByBurgerId(int id);
     }
 }

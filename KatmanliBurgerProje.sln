@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KatmanliBurger_DATA", "KatmanliBurger_DATA\KatmanliBurger_DATA.csproj", "{0676F55B-89D5-49FB-A062-ED24D693268F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KatmanliBurger_DATA", "KatmanliBurger_DATA\KatmanliBurger_DATA.csproj", "{0676F55B-89D5-49FB-A062-ED24D693268F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KatmanliBurger_DAL", "KatmanliBurger_DAL\KatmanliBurger_DAL.csproj", "{7C762BF6-4A62-4E5B-B7D1-9B935F947483}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KatmanliBurger_DAL", "KatmanliBurger_DAL\KatmanliBurger_DAL.csproj", "{7C762BF6-4A62-4E5B-B7D1-9B935F947483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KatmanliBurger_Service", "KatmanliBurger_Service\KatmanliBurger_Service.csproj", "{A6172EC3-F61C-4CC7-81F3-165654194FE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7C762BF6-4A62-4E5B-B7D1-9B935F947483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C762BF6-4A62-4E5B-B7D1-9B935F947483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C762BF6-4A62-4E5B-B7D1-9B935F947483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6172EC3-F61C-4CC7-81F3-165654194FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6172EC3-F61C-4CC7-81F3-165654194FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6172EC3-F61C-4CC7-81F3-165654194FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6172EC3-F61C-4CC7-81F3-165654194FE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
