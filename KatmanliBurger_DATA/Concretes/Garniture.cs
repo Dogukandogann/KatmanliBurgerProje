@@ -8,6 +8,6 @@ namespace KatmanliBurger_DATA.Concretes
 
         //nav
 
-        public virtual ICollection<BurgerGarniture> BurgerGarnitures { get; set; }
+        public virtual ICollection<BurgerGarnitureMapping> BurgerGarnitures { get; set; }
     }
 }

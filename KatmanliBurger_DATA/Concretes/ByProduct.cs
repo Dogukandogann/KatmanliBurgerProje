@@ -18,8 +18,8 @@ namespace KatmanliBurger_DATA.Concretes
         public int CategoryId { get; set; }
 
         //nav
-        public virtual ICollection<MenuByProduct> MenuByProducts { get; set; }
-        public virtual ICollection<OrderByProduct> OrderByProducts { get; set; }
+        public virtual ICollection<MenuByProductMapping> MenuByProducts { get; set; }
+        public virtual ICollection<OrderByProductMapping> OrderByProducts { get; set; }
         public virtual Category Category { get; set; }
     }
 }

@@ -12,17 +12,17 @@ namespace KatmanliBurger_DAL.Contexts
     {
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Burger> Burgers { get; set; }
-        public DbSet<BurgerGarniture> BurgerGarnitures { get; set; }
-        public DbSet<BurgerMenu> BurgerMenus { get; set; }
-        public DbSet<BurgerOrder> BurgerOrders { get; set; }
+        public DbSet<BurgerGarnitureMapping> BurgerGarnitures { get; set; }
+        public DbSet<BurgerMenuMapping> BurgerMenus { get; set; }
+        public DbSet<BurgerOrderMapping> BurgerOrders { get; set; }
         public DbSet<ByProduct> ByProducts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Garniture> Garnitures { get; set; }
         public DbSet<Menu> Menus { get; set; }
-        public DbSet<MenuByProduct> MenuByProducts { get; set; }
-        public DbSet<MenuOrder> MenuOrders { get; set; }
+        public DbSet<MenuByProductMapping> MenuByProducts { get; set; }
+        public DbSet<MenuOrderMapping> MenuOrders { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderByProduct> OrderByProducts { get; set; }
+        public DbSet<OrderByProductMapping> OrderByProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

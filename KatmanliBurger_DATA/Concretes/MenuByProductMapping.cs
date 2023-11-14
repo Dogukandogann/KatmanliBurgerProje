@@ -1,8 +1,9 @@
-﻿namespace KatmanliBurger_DATA.Concretes
+﻿using KatmanliBurger_DATA.Abstracts;
+
+namespace KatmanliBurger_DATA.Concretes
 {
-    public class MenuByProduct
+    public class MenuByProductMapping : BaseEntity
     {
-        public int Id { get; set; }
         public int MenuId { get; set; }
         public int ByProductId { get; set; }
 

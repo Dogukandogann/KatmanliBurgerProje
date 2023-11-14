@@ -11,8 +11,8 @@ namespace KatmanliBurger_DATA.Concretes
         public int Piece { get; set; } = 1;
 
         //nav
-        public virtual ICollection<BurgerGarniture> BurgerGarnitures { get; set; }
-        public virtual ICollection<BurgerOrder> BurgerOrders { get; set; }
-        public virtual ICollection<BurgerMenu> BurgerMenus { get; set; }
+        public virtual ICollection<BurgerGarnitureMapping> BurgerGarnitures { get; set; }
+        public virtual ICollection<BurgerOrderMapping> BurgerOrders { get; set; }
+        public virtual ICollection<BurgerMenuMapping> BurgerMenus { get; set; }
     }
 }
