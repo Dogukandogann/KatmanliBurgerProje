@@ -8,6 +8,6 @@ namespace KatmanliBurger_Service.Service.MenuService
         void Update(Menu entity);
         void UpdateStatus(int id);
         Menu GetById(int id);
-        IEnumerable<Menu> GetAll()
+        IEnumerable<Menu> GetAll();
     }
 }
