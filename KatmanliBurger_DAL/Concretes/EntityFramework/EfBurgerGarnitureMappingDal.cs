@@ -7,7 +7,7 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
 {
     public class EfBurgerGarnitureMappingDal : EfBaseDal<BurgerGarnitureMapping, BurgerDbContext>, IBurgerGarnitureMappingDal
     {
-        public void Craete(IEnumerable<BurgerGarnitureMapping> entities)
+        public void Create(IEnumerable<BurgerGarnitureMapping> entities)
         {
             using (BurgerDbContext context = new BurgerDbContext())
             {
@@ -16,11 +16,21 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
             }
         }
 
+        public void Delete(IEnumerable<BurgerGarnitureMapping> entities)
+        {
+            using (BurgerDbContext context = new BurgerDbContext())
+            {
+                context.BurgerGarnitures.RemoveRange(entities);
+                context.SaveChanges();
+            }
+
+        }
+
         public IEnumerable<BurgerGarnitureMapping> GetByBurgerId(int id)
         {
             using (BurgerDbContext context = new BurgerDbContext())
             {
-               return  context.BurgerGarnitures.Where(x => x.BurgerId.Equals(id)).ToList();
+                return context.BurgerGarnitures.Where(x => x.BurgerId.Equals(id)).ToList();
             }
         }
 
