@@ -26,7 +26,12 @@ namespace KatmanliBurger_Service.Service.ByProductService
             return _byProductDal.GetById(id);
         }
 
-        public void Update(ByProduct entity)
+		public List<ByProduct> GetProductsWithCategories()
+		{
+            return _byProductDal.GetProductsWithCategories();
+		}
+
+		public void Update(ByProduct entity)
         {
             entity.UpdatedDate = DateTime.Now;
             _byProductDal.Update(entity);

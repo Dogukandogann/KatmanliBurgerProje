@@ -1,0 +1,75 @@
+﻿@model ProductEditDto
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+<div class="container-fluid">
+    <h4 class="page-title">Ürün İşlemleri</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Ürün Güncelle</div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" asp-for="ByProduct.Id" />
+                        <div class="form-group">
+                                <label for="ByProduct.Name">Ürün Adı:</label>
+                                <input type="text" class="form-control" asp-for="ByProduct.Name" id="ByProduct.Name">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                                <label for="ByProduct.Price">Fiyat:</label>
+                                <input type="text" class="form-control" asp-for="ByProduct.Price" id="ByProduct.Price">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                                <label for="ByProduct.Image">Ürün Görsel</label>
+                                <input type="text" class="form-control" asp-for="ByProduct.Image" id="ByProduct.Image">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                                <label for="ByProduct.Description">Ürün Açıklaması:</label>
+                                <input type="text" class="form-control" asp-for="ByProduct.Description" id="ByProduct.Description">
+
+                        </div>
+                    </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Size">Boyut:</label>
+                                <select asp-for="ByProduct.Size" asp-items="new SelectList(Model.Size)" class="form-control"></select>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ByProduct.Piece">Adet:</label>
+                                <input type="number" class="form-control" asp-for="ByProduct.Piece" id="ByProduct.Piece">
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ByProduct.CategoryId">Kategori:</label>
+                                <select asp-items="@(new SelectList(Model.Categories, "Id","Name"))" asp-for="ByProduct.CategoryId" class="form-control"></select>
+                            </div>
+                        </div>
+                    <div class="card-action">
+                        <button class="btn btn-primary" type="submit">Ürünü Güncelle</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+

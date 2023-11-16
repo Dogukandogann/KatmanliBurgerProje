@@ -16,8 +16,10 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
             }
         }
 
-        public void Delete(IEnumerable<BurgerGarnitureMapping> entities)
+        public  void Delete(IEnumerable<BurgerGarnitureMapping> entities)
         {
+            
+            
             using (BurgerDbContext context = new BurgerDbContext())
             {
                 context.BurgerGarnitures.RemoveRange(entities);

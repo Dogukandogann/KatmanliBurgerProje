@@ -3,11 +3,15 @@ using KatmanliBurger_DAL.Concretes.EntityFramework;
 using KatmanliBurger_DAL.Contexts;
 using KatmanliBurger_Service.Service.BurgerGarnitureMappingService;
 using KatmanliBurger_Service.Service.BurgerService;
+using KatmanliBurger_Service.Service.ByProductService;
+using KatmanliBurger_Service.Service.CategoryService;
 using KatmanliBurger_Service.Service.GarnitureService;
+using KatmanliBurger_Service.Service.MenuService;
+using System.Reflection;
 
 namespace KatmanliBurger_UI
 {
-	public class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -15,9 +19,22 @@ namespace KatmanliBurger_UI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+			
 
-            builder.Services.AddDbContext<BurgerDbContext>();
-            builder.Services.AddScoped<IBurgerService, BurgerManager>();
+			builder.Services.AddDbContext<BurgerDbContext>();
+			builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+			builder.Services.AddScoped<IBurgerService, BurgerManager>();
+            builder.Services.AddScoped<IMenuService, MenuManager>();
+            builder.Services.AddScoped<IMenuDal, EfMenuDal>();
+
+            builder.Services.AddScoped<IByProductDal, EfByProductDal>();
+            builder.Services.AddScoped<IByProductService, ByProductManager>();
+
+            builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+            builder.Services.AddScoped<ICategoryService, CategoryManager>();
+
+
+
             builder.Services.AddScoped<IBurgerDal, EfBurgerDal>();
             builder.Services.AddScoped<IGarnitureDal, EfGarnitureDal>();
             builder.Services.AddScoped<IGarnitureService, GarnitureManager>();
@@ -44,8 +61,9 @@ namespace KatmanliBurger_UI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+			app.MapControllers();
 
-            app.MapControllerRoute(
+			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 

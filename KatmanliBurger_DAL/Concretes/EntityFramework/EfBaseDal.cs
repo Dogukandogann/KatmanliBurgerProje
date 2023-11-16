@@ -1,6 +1,8 @@
 ﻿using KatmanliBurger_DAL.Abstract.Base;
 using KatmanliBurger_DATA.Abstracts;
+using KatmanliBurger_DATA.Concretes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 
 namespace KatmanliBurger_DAL.Concretes.EntityFramework
@@ -17,13 +19,22 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
             }
         }
 
-        public void Delete(Tentity entity)
+        public  void Delete(Tentity entity)
         {
             using (Tcontext context = new Tcontext())
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                if (entity is BurgerGarnitureMapping)
+                {
+                    context.Remove(entity);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    var addedEntity = context.Entry(entity);
+                    addedEntity.State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+           
             }
         }
 

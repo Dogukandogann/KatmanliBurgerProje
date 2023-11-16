@@ -1,57 +1,68 @@
-﻿@using KatmanliBurger_DATA.Concretes;
-@model Tuple<Burger, IEnumerable<Garniture>>
-
+﻿@model List<KatmanliBurger_DATA.Concretes.Burger>
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<h1>Index</h1>
 
-<h4>Burger</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Item1.Name" class="control-label"></label>
-                <input asp-for="Item1.Name" class="form-control" />
-                <span asp-validation-for="Item1.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item1.Description" class="control-label"></label>
-                <input asp-for="Item1.Description" class="form-control" />
-                <span asp-validation-for="Item1.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item1.Price" class="control-label"></label>
-                <input asp-for="Item1.Price" class="form-control" />
-                <span asp-validation-for="Item1.Price" class="text-danger"></span>
-            </div>
-           <div>
-                
-                @foreach (var item in Model.Item2.ToList())
-                {
-                    <div>
-
-                        <input type="checkbox" name="SelectedGarnitures" value="@item.Id" />
-
-                        <label>@item.Name</label>
-
-                    </div>
-                }
-           </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="content">
+	<div class="container-fluid">
+		<h4 class="page-title">Hamburger İşlemleri</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">Ürün Listesi</div>
+					</div>
+					<div class="card-body">
+						<div class="card-sub">
+							Hamburger işlemlerini aşağıdan gerçekleştirebilirsiniz.
+						</div>
+						<table class="table mt-3">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Burger Adı</th>
+									<th scope="col">Açıklama</th>
+									<th scope="col">Fiyat</th>
+									<th scope="col">Resim</th>
+									<th scope="col">Durum</th>
+									<th scope="col">Akif/Pasif</th>
+									<th scope="col">Güncelle</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>@item.Id</td>
+										<td>@item.Name</td>
+										<td>@item.Description</td>
+										<td>@item.Price</td>
+										<td>@item.Image</td>
+										<td>@item.Status</td>
+										@if (item.Status==KatmanliBurger_DATA.Enums.Status.Active)
+										{
+											<td><a href="/Burger/Delete/@item.Id" class="btn btn-outline-danger">Pasifleştir</a></td>
+										}
+										else
+										{
+											<td><a href="/Burger/Delete/@item.Id" class="btn btn-outline-success">Aktifleştir</a></td>
+										}
+										<td><a href="/Burger/Edit/@item.Id" class="btn btn-outline-success">Güncelle</a></td>
+									</tr>
+								}
+							</tbody>
+						</table>
+						<a href="/Burger/CreateBurger/" class="btn btn-outline-primary">Yeni Hamburger Oluştur</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+

@@ -10,5 +10,6 @@ namespace KatmanliBurger_Service.Service.ByProductService
         void UpdateStatus(int id);
         ByProduct GetById(int id);
         IEnumerable<ByProduct> GetAll();
-    }
+		List<ByProduct> GetProductsWithCategories();
+	}
 }

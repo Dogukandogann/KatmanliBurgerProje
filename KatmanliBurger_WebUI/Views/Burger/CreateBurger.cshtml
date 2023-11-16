@@ -1,0 +1,66 @@
+﻿@model BurgerCreateDto
+@{
+    ViewData["Title"] = "CreateBurger";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Ürün İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" asp-action="CreateBurger" >
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Yeni Ürün Ekle</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Burger Adı:</label>
+                                <input type="text" class="form-control" asp-for="Name" id="Name">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Price">Fiyat:</label>
+                                <input type="text" class="form-control" asp-for="Price" id="Price">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Image">Burger Görsel</label>
+                                <input type="text" class="form-control" asp-for="Image" id="Image">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Ürün Açıklaması:</label>
+                                <input type="text" class="form-control" asp-for="Description" id="Description">
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <label>Garnitürler:</label>
+                            <div class="form-group">
+                                @foreach (var item in Model.Garnitures)
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id"  name="selectedgarniture">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-primary" type="submit" >Ürün Kaydet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

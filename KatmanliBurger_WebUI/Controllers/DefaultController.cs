@@ -6,8 +6,6 @@ namespace KatmanliBurger_UI.Controllers
     {
         public IActionResult Index()
         {
-            
-            
             return View();
         }
     }

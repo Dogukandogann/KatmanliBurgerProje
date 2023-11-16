@@ -12,5 +12,7 @@ namespace KatmanliBurger_Service.Service.BurgerGarnitureMappingService
         void Delete(IEnumerable<BurgerGarnitureMapping> entities);
         IEnumerable<BurgerGarnitureMapping> GetByBurgerId(int id);
 
-    }
+
+
+	}
 }

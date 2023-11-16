@@ -5,6 +5,6 @@ namespace KatmanliBurger_DAL.Abstract
 {
     public interface IByProductDal : IBaseDal<ByProduct>
     {
-
-    }
+		List<ByProduct> GetProductsWithCategories();
+	}
 }
