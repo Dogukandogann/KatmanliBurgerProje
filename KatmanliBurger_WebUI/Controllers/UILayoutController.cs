@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_UI.Controllers
+namespace KatmanliBurger_WebUI.Controllers
 {
     public class UILayoutController : Controller
     {

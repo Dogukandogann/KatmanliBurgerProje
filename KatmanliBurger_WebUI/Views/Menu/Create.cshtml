@@ -1,0 +1,116 @@
+﻿
+@model MenuCreateDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Menü İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" asp-action="Create">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Menü  Ekle</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">İsim</label>
+                                <input type="text" class="form-control" asp-for="Name" id="Name">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Burger Seçimi:</label>
+                                @foreach (var item in Model.Burgers)
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedburgers">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+@*                         <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Çıtır Lezzet Seçimi:</label>
+                                <select asp-items="@(new SelectList(Model.CıtırLezzetler, "Id","Name"))" asp-for="Byproduct.Id" class="form-control"></select>
+                            </div>
+                        </div> *@
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Çıtır Lezzet Seçimi:</label>
+                                @foreach (var item in Model.CıtırLezzetler)
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedcitilezzetler">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">İçecek Seçimi:</label>
+                                @foreach (var item in Model.Icecekler)
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedicecekler">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Tatlı Seçimi:</label>
+                                @foreach (var item in Model.Tatlilar)
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedtatlilar">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Price">Fiyat:</label>
+                                <input type="text" class="form-control" asp-for="Price" id="Price">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Image">Burger Görsel</label>
+                                <input type="text" class="form-control" asp-for="Image" id="Image">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Ürün Açıklaması:</label>
+                                <input type="text" class="form-control" asp-for="Description" id="Description">
+
+                            </div>
+                        </div>
+                       
+                        <div class="card-action">
+                            <button class="btn btn-primary" type="submit">Menü Kaydet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* <select asp-items="@(new SelectList(Model.Categories, "Id","Name"))" asp-for="ByProduct.CategoryId" class="form-control"></select>
+<select asp-for="ByProduct.Size" asp-items="new SelectList(Model.Size)" class="form-control"></select> *@
+
+
+
+

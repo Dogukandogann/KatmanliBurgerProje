@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_UI.ViewComponents.DefaultComponents
+namespace KatmanliBurger_WebUI.ViewComponents.DefaultComponents
 {
     public class _DefaultSliderComponentPartial:ViewComponent
     {

@@ -1,4 +1,4 @@
-﻿using KatmanliBurger_DAL.Abstract;
+﻿using KatmanliBurger_DAL.Abstracts;
 using KatmanliBurger_DAL.Contexts;
 using KatmanliBurger_DATA.Concretes;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +14,6 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
 				var values = context.ByProducts.Include(x => x.Category).ToList();
 				return values;
 			}
-				
-			
 		}
 	}
 }

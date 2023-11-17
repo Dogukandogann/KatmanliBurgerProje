@@ -1,7 +1,8 @@
-﻿@model List<KatmanliBurger_DATA.Concretes.Burger>
+﻿
+@model List<Burger>
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/AdminLayout/Index.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
 
@@ -41,7 +42,7 @@
 										<td>@item.Price</td>
 										<td>@item.Image</td>
 										<td>@item.Status</td>
-										@if (item.Status==KatmanliBurger_DATA.Enums.Status.Active)
+										@if (item.Status == KatmanliBurger_DATA.Enums.Status.Active)
 										{
 											<td><a href="/Burger/Delete/@item.Id" class="btn btn-outline-danger">Pasifleştir</a></td>
 										}

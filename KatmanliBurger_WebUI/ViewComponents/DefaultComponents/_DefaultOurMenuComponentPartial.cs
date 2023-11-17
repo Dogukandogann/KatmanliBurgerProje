@@ -1,11 +1,11 @@
-﻿using KatmanliBurger_Service.Service.BurgerService;
-using KatmanliBurger_Service.Service.ByProductService;
-using KatmanliBurger_Service.Service.CategoryService;
-using KatmanliBurger_Service.Service.MenuService;
-using KatmanliBurger_UI.DTOs.MenuProductViewDtos;
+﻿using KatmanliBurger_SERVICE.Services.BurgerServices;
+using KatmanliBurger_SERVICE.Services.ByProductServices;
+using KatmanliBurger_SERVICE.Services.CategoryServices;
+using KatmanliBurger_SERVICE.Services.MenuServices;
+using KatmanliBurger_WebUI.DTOs.MenuProductViewDtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_UI.ViewComponents.DefaultComponents
+namespace KatmanliBurger_WebUI.ViewComponents.DefaultComponents
 {
     public class _DefaultOurMenuComponentPartial:ViewComponent
     {

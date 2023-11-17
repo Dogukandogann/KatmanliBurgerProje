@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using KatmanliBurger_DAL.Abstract;
-using KatmanliBurger_DAL.Concretes.EntityFramework;
 using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.Enums;
-using KatmanliBurger_Service.Service.BurgerService;
-using KatmanliBurger_Service.Service.ByProductService;
-using KatmanliBurger_Service.Service.CategoryService;
-using KatmanliBurger_UI.DTOs.MenuProductViewDtos;
-using KatmanliBurger_WebUI.DTOs.BurgerViewDtos;
+using KatmanliBurger_SERVICE.Services.ByProductServices;
+using KatmanliBurger_SERVICE.Services.CategoryServices;
 using KatmanliBurger_WebUI.DTOs.ProductViewDtos;
 using Microsoft.AspNetCore.Mvc;
 

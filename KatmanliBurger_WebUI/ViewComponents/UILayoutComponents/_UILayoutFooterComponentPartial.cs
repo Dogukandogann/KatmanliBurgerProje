@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_UI.ViewComponents.UILayoutComponents
+namespace KatmanliBurger_WebUI.ViewComponents.UILayoutComponents
 {
     public class _UILayoutFooterComponentPartial:ViewComponent
     {

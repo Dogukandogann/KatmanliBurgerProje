@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KatmanliBurger_DAL\KatmanliBurger_DAL.csproj" />
-    <ProjectReference Include="..\KatmanliBurger_DATA\KatmanliBurger_DATA.csproj" />
   </ItemGroup>
 
 </Project>

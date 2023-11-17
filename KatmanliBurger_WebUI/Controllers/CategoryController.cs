@@ -1,8 +1,5 @@
 ﻿using KatmanliBurger_DATA.Concretes;
-using KatmanliBurger_Service.Service.ByProductService;
-using KatmanliBurger_Service.Service.CategoryService;
-using KatmanliBurger_WebUI.DTOs.CategoryViewDtos;
-using KatmanliBurger_WebUI.DTOs.ProductViewDtos;
+using KatmanliBurger_SERVICE.Services.CategoryServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KatmanliBurger_WebUI.Controllers

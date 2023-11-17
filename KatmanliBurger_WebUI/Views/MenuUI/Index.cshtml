@@ -1,0 +1,20 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+@await Component.InvokeAsync("_UILayoutHeadComponentPartial")
+
+<body class="sub_page">
+
+	@await Component.InvokeAsync("_MenuNavbarComponentPartial")
+
+	@await Component.InvokeAsync("_MenuIngrediantsComponentPartial")
+	@await Component.InvokeAsync("_UILayoutScriptComponentPartial")
+	@await Component.InvokeAsync("_UILayoutFooterComponentPartial")
+
+</body>
+
+</html>

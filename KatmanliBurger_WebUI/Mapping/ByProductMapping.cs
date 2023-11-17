@@ -4,7 +4,7 @@ using KatmanliBurger_WebUI.DTOs.ProductViewDtos;
 
 namespace KatmanliBurger_WebUI.Mapping
 {
-	public class ByProductMapping:Profile
+    public class ByProductMapping:Profile
 	{
         public ByProductMapping()
         {

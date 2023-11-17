@@ -1,4 +1,4 @@
-namespace KatmanliBurger_UI.Models
+namespace KatmanliBurger_WebUI.Models
 {
     public class ErrorViewModel
     {

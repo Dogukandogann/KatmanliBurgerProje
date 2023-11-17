@@ -1,4 +1,4 @@
-﻿using KatmanliBurger_DAL.Abstract;
+﻿using KatmanliBurger_DAL.Abstracts;
 using KatmanliBurger_DAL.Contexts;
 using KatmanliBurger_DATA.Concretes;
 
