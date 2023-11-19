@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.ViewComponents.MenuComponents
+namespace KatmanliBurger_UI.ViewComponents.MenuComponents
 {
     public class _MenuNavbarComponentPartial:ViewComponent
     {

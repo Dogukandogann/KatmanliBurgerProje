@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using KatmanliBurger_DATA.Concretes;
-using KatmanliBurger_WebUI.DTOs.ProductViewDtos;
+using KatmanliBurger_UI.DTOs.ProductViewDtos;
 
-namespace KatmanliBurger_WebUI.Mapping
+namespace KatmanliBurger_UI.Mapping
 {
-    public class ByProductMapping:Profile
+	public class ByProductMapping:Profile
 	{
         public ByProductMapping()
         {

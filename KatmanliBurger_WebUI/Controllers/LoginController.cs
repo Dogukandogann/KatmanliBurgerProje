@@ -1,9 +1,10 @@
 ﻿using KatmanliBurger_DATA.Concretes;
-using KatmanliBurger_WebUI.Models;
+using KatmanliBurger_UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
 	public class LoginController : Controller
 	{
@@ -36,7 +37,15 @@ namespace KatmanliBurger_WebUI.Controllers
 					Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(appUser, vm.Password, false, false);
 					if (signInResult.Succeeded)
 					{
-						return RedirectToAction("Index", "Default"); //Gideceği yer..
+
+						if (await _userManager.IsInRoleAsync(appUser, "Admin"))
+						{
+							return RedirectToAction("Index", "Category"); //Gideceği yer..
+						}
+						else
+						{
+							return RedirectToAction("Index", "Default"); //Gideceği yer..
+						}
 					}
 					ModelState.AddModelError("", "Wrong credantion information");
 				}

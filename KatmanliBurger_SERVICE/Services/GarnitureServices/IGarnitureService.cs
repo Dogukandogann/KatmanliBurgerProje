@@ -9,5 +9,6 @@ namespace KatmanliBurger_SERVICE.Services.GarnitureServices
 		void UpdateStatus(int id);
 		Garniture GetById(int id);
 		IEnumerable<Garniture> GetAll();
+		IEnumerable<Garniture> GetByIdList(List<int> ids);
 	}
 }

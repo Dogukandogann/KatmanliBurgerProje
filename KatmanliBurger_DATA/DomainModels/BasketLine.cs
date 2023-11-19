@@ -15,5 +15,6 @@ namespace KatmanliBurger_DATA.DomainModels
         public int ByProductQuantity { get; set; }
         public int MenuQuantity { get; set; }
         public int BurgerQuantity { get; set; }
-    }
+		public string Description { get; set; }
+	}
 }

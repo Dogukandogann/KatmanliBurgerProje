@@ -28,6 +28,11 @@ namespace KatmanliBurger_SERVICE.Services.BurgerServices
 			return _burgerDal.GetById(id);
 		}
 
+		public IEnumerable<Burger> GetByIdList(List<int> ids)
+		{
+			return _burgerDal.GetByIdList(ids);
+		}
+
 		public void Update(Burger entity)
 		{
 			entity.UpdatedDate = DateTime.Now;

@@ -1,0 +1,251 @@
+﻿@model MenuDto
+<section class="book_section layout_padding">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card" style="width: 25rem;">
+					<img src="~/feane-1.0.0/images/f1.png" alt="">
+					<div class="card-body">
+						<h5 class="card-title">@Model.Menu.Name</h5>
+					@*	<h6 class="card-subtitle mb-2 text-body-secondary">@Model.Menu.Price TL</h6>*@
+						<h6 id="menuPrice" class="card-subtitle mb-2 text-body-secondary">@Model.Menu.Price TL</h6>
+
+						<p class="card-text">@Model.Menu.Description</p>
+					</div>
+					<div class="card-body d-flex justify-content-end align-items-center">
+						<div class="input-group">
+							<button id="decreaseQuantity" class="btn fa fa-minus fa-small me-2" aria-hidden="true"></button>
+							<span class="input-group-text" id="quantity">1</span>
+							<button id="increaseQuantity" class="btn fa fa-plus fa-small me-2" aria-hidden="true"></button>
+						</div>
+						<a id="addToBasket" class="btn btn-danger text-white" asp-action="AddToBasket" asp-controller="Baskets" asp-route-menuId="@Model.Menu.Id" style="width:15rem;" asp-route-menuQuantity="1" asp-route-allMenuDescription="">Sepete Ekle</a>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<div class="form_container">
+					<form action="">
+						<div class="card mb-3">
+							<div class="card-header text-center">
+								<b>Burger</b>
+							</div>
+
+							@foreach (var burger in Model.Burgers)
+							{
+								<div class="card-body">
+									<input class="form-control" value="@burger.Name" disabled />
+									<div class="text-start">
+										<b>Garnitürler</b>
+									</div>
+									<div class="row">
+										@foreach (var garniture in Model.AllGarnitures)
+										{
+											if (Model.BurgerGarnitureMappings.Any(x => x.BurgerId == burger.Id && x.GarnitureId == garniture.Id))
+											{
+												<div class="custom-control custom-checkbox col-3 ml-3">
+													<input class="custom-control-input custom-control-input-outline" type="checkbox" value="" id="@garniture.Id-@burger.Id" checked>
+													<label class="custom-control-label" for="@garniture.Id-@burger.Id">
+														@garniture.Name
+													</label>
+												</div>
+											}
+											else
+											{
+												<div class="custom-control custom-checkbox col-3 ml-3">
+													<input class="custom-control-input custom-control-input-outline" type="checkbox" value="" id="@garniture.Id-@burger.Id">
+													<label class="custom-control-label" for="@garniture.Id-@burger.Id">
+														@garniture.Name
+													</label>
+												</div>
+											}
+										}
+									</div>
+								</div>
+							}
+
+						</div>
+						<div class="card mb-3">
+							<div class="card-header text-center">
+								<b>Menü Boyutu Seçimi</b>
+							</div>
+							<div class="card-body">
+								<div>
+									<select class="form-select form-control size">
+										<option selected>Boyut Seçiniz</option>
+
+										@foreach (var size in Model.Size)
+										{
+											<option value="@size.Value">@size.Text</option>
+										}
+									</select>
+								</div>
+
+							</div>
+						</div>
+						<div class="card mb-3">
+							<div class="card-header text-center">
+								<b>Patates Seçimi</b>
+							</div>
+							<div class="card-body">
+								<div>
+									<select class="form-select  form-control" aria-label="Default select example">
+										<option selected>Patates Seçiniz</option>
+										@foreach (var patates in Model.AllByproducts.Where(x => x.CategoryId == 2))
+										{
+											<option value="@patates.Id">@patates.Name</option>
+										}
+									</select>
+								</div>
+
+							</div>
+						</div>
+						<div class="card mb-3">
+							<div class="card-header text-center">
+								<b>İçecek Seçimi</b>
+							</div>
+							<div class="card-body">
+								<div>
+									<select class="form-select  form-control" aria-label="Default select example">
+										<option selected>İçecek Seçiniz</option>
+										@foreach (var icecek in Model.AllByproducts.Where(x => x.CategoryId == 1))
+										{
+											<option value="@icecek.Id">@icecek.Name</option>
+										}
+									</select>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<span id="allMenuDescrition"></span>
+
+</section>
+
+<script>
+	const decreaseButton = document.getElementById('decreaseQuantity');
+	const increaseButton = document.getElementById('increaseQuantity');
+	const quantitySpan = document.getElementById('quantity');
+	let quantity = 1;
+
+	decreaseButton.addEventListener('click', () => {
+		if (quantity > 1) {
+			quantity--;
+			quantitySpan.textContent = quantity;
+			updateHref();
+		}
+	});
+
+	increaseButton.addEventListener('click', () => {
+		if (quantity < 10) {
+			quantity++;
+			quantitySpan.textContent = quantity;
+			updateHref();
+		}
+	});
+
+	function updateHref() {
+		const addToBasketButton = document.getElementById('addToBasket');
+		const href = addToBasketButton.getAttribute('href');
+
+		const urlParts = href.split('?');
+		const queryParams = urlParts[1];
+		const params = new URLSearchParams(queryParams);
+		params.set('menuQuantity', quantity.toString());
+		const updatedHref = `${urlParts[0]}?${params.toString()}`;
+
+		addToBasketButton.setAttribute('href', updatedHref);
+	};
+
+	document.addEventListener('DOMContentLoaded', function () {
+
+		const addToBasketButton = document.getElementById('addToBasket');
+
+		addToBasketButton.addEventListener('click', function () {
+			let message = getAllMenuDescription();
+
+			const href = addToBasketButton.getAttribute('href');
+			const urlParts = href.split('?');
+			const queryParams = urlParts[1];
+			const params = new URLSearchParams(queryParams);
+			params.set('allMenuDescription', message);
+			const updatedHref = `${urlParts[0]}?${params.toString()}`;
+
+			addToBasketButton.setAttribute('href', updatedHref);
+		});
+
+		function getAllMenuDescription() {
+			let menuDescription = '';
+
+			document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+				const label = document.querySelector(`label[for="${checkbox.id}"]`);
+				const burgerId = checkbox.id.split('-')[1]; // Extract burger Id from the checkbox id
+				const status = checkbox.checked ? 'var' : 'yok';
+				menuDescription += `${burgerId}-${label.textContent.trim()} : ${status}\n`;
+			});
+
+			document.querySelectorAll('select').forEach(function (select) {
+				const selectedOption = select.options[select.selectedIndex];
+				menuDescription += `${selectedOption.text}\n`;
+			});
+
+			return menuDescription.trim().toString();
+		}
+
+	});
+
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		
+		const sizeSelect = document.querySelector('.form-select.form-control.size');
+		
+		sizeSelect.addEventListener('change', function () {
+			const selectedSize = sizeSelect.value;
+
+			
+			let price = parseFloat('@Model.Menu.Price'); 
+
+			
+			if (selectedSize === "0") {
+				price *= 0.8; 
+			} else if (selectedSize === "2") {
+				price *= 1.2; 
+			}
+
+			
+			const priceElement = document.getElementById('menuPrice');
+			priceElement.textContent = `${price.toFixed(2)} TL`;
+
+			
+			const addToBasketButton = document.getElementById('addToBasket');
+			
+			addToBasketButton.addEventListener('click', function () {
+				
+				const href = addToBasketButton.getAttribute('href');
+				const urlParts = href.split('?');
+				const queryParams = urlParts[1];
+				const params = new URLSearchParams(queryParams);
+				//console.log(price.toString().split(' TL'));
+				
+				params.set('menuPrice', price);
+				const updatedHref = `${urlParts[0]}?${params.toString()}`;
+
+				addToBasketButton.setAttribute('href', updatedHref);
+			});
+
+			//const updatedUrl = `Baskets/AddToBasket?price=${price.toFixed(2)}`;
+			//window.location.href = updatedUrl;
+		});
+	});
+
+</script>

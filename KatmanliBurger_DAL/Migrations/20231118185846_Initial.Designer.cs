@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KatmanliBurger_DAL.Migrations
 {
     [DbContext(typeof(BurgerDbContext))]
-    [Migration("20231117183212_init")]
-    partial class init
+    [Migration("20231118185846_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -332,6 +332,36 @@ namespace KatmanliBurger_DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2023, 11, 18, 21, 58, 46, 518, DateTimeKind.Local).AddTicks(5598),
+                            Name = "İçecek",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2023, 11, 18, 21, 58, 46, 518, DateTimeKind.Local).AddTicks(5599),
+                            Name = "Patates",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2023, 11, 18, 21, 58, 46, 518, DateTimeKind.Local).AddTicks(5601),
+                            Name = "Tatlı",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2023, 11, 18, 21, 58, 46, 518, DateTimeKind.Local).AddTicks(5602),
+                            Name = "Atıştırmalık",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("KatmanliBurger_DATA.Concretes.Garniture", b =>
@@ -473,6 +503,9 @@ namespace KatmanliBurger_DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -523,6 +556,67 @@ namespace KatmanliBurger_DAL.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderByProducts");
+                });
+
+            modelBuilder.Entity("KatmanliBurger_DATA.DomainModels.ParameterDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ParameterTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParameterTypeId");
+
+                    b.ToTable("ParameterDetails");
+                });
+
+            modelBuilder.Entity("KatmanliBurger_DATA.DomainModels.ParameterType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParameterTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -767,6 +861,17 @@ namespace KatmanliBurger_DAL.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("KatmanliBurger_DATA.DomainModels.ParameterDetail", b =>
+                {
+                    b.HasOne("KatmanliBurger_DATA.DomainModels.ParameterType", "ParameterType")
+                        .WithMany("ParameterDetails")
+                        .HasForeignKey("ParameterTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParameterType");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("KatmanliBurger_DATA.Concretes.AppRole", null)
@@ -865,6 +970,11 @@ namespace KatmanliBurger_DAL.Migrations
                     b.Navigation("MenuOrders");
 
                     b.Navigation("OrderByProducts");
+                });
+
+            modelBuilder.Entity("KatmanliBurger_DATA.DomainModels.ParameterType", b =>
+                {
+                    b.Navigation("ParameterDetails");
                 });
 #pragma warning restore 612, 618
         }

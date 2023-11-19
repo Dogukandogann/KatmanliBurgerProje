@@ -1,6 +1,5 @@
-﻿
+﻿@model BasketListViewModel
 
-@model BasketListViewModel
 @{
 	Layout = null;
 	int count = 0;
@@ -11,6 +10,7 @@
 }
 
 <!DOCTYPE html>
+
 <html>
 
 @await Component.InvokeAsync("_UILayoutHeadComponentPartial")
@@ -42,6 +42,7 @@
 							<th>Adet</th>
 							<th>Fiyat</th>
 							<th>Toplam</th>
+							<th>Detay</th>
 							<th>Sil</th>
 						</tr>
 					</thead>
@@ -64,10 +65,19 @@
 								<tr>
 									<td class="align-middle">@count</td>
 									<td class="align-middle">@item.Burger.Name</td>
-									<td class="align-middle">@item.BurgerQuantity</td>
+									<td class="align-middle">
+										<div class="input-group d-flex justify-content-center">
+											<a class="btn fa fa-minus fa-small" aria-hidden="true" id="burgerMinus" asp-action="RemoveFromBasket" asp-controller="Baskets" asp-route-burgerId="@item.Burger.Id" asp-route-removeAll="0"></a>
+											<span class="input-group-text" id="burgerQuantity" data-burgerQuantity="@item.BurgerQuantity">@item.BurgerQuantity</span>
+											<a class="btn fa fa-plus fa-small" aria-hidden="true" id="burgerPlus" asp-action="AddToBasket" asp-controller="Baskets" asp-route-burgerId="@item.Burger.Id"></a>
+										</div>
+									</td>
 									<td class="align-middle">@item.Burger.Price</td>
-									<td class="align-middle">@(item.Burger.Price * item.BurgerQuantity)</td>
-									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" href="/Baskets/RemoveFromBasket/@item.Burger.Id"><i class="fa fa-times"></i></a></td>
+									<td class="align-middle">
+										<span id="burgerTotalAmount">@(item.Burger.Price * item.BurgerQuantity)</span>
+									</td>
+									<td></td>
+									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" asp-action="RemoveFromBasket" asp-controller="Baskets" asp-route-burgerId="@item.Burger.Id" asp-route-removeAll="1"><i class="fa fa-times"></i></a></td>
 								</tr>
 							}
 							if (item.Menu is not null)
@@ -77,10 +87,19 @@
 								<tr>
 									<td class="align-middle">@count</td>
 									<td class="align-middle">@item.Menu.Name</td>
-									<td class="align-middle">@item.MenuQuantity</td>
+									<td class="align-middle">
+										<div class="input-group d-flex justify-content-center">
+											<a class="btn fa fa-minus fa-small" aria-hidden="true" id="menuMinus" asp-action="RemoveFromBasket" asp-controller="Baskets" asp-route-menuId="@item.Menu.Id" asp-route-removeAll="0"></a>
+											<span class="input-group-text" id="menuQuantity" data-menuQuantity="@item.MenuQuantity">@item.MenuQuantity</span>
+											<a class="btn fa fa-plus fa-small" aria-hidden="true" id="menuPlus" asp-action="AddToBasket" asp-controller="Baskets" asp-route-menuId="@item.Menu.Id"></a>
+										</div>
+									</td>
 									<td class="align-middle">@item.Menu.Price</td>
 									<td class="align-middle">@(item.Menu.Price * item.MenuQuantity)</td>
-									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" asp-action="RemoveFromBasket" asp-route-menuId="@item.Menu.Id"><i class="fa fa-times"></i></a></td>
+									<td class="align-middle">
+										<a class="btn btn-sm btn-info" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i class="fa fa-search"></i></a>
+									</td>
+									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" asp-action="RemoveFromBasket" asp-route-menuId="@item.Menu.Id" asp-route-removeAll="1"><i class="fa fa-times"></i></a></td>
 								</tr>
 							}
 							if (item.ByProduct is not null)
@@ -90,10 +109,17 @@
 								<tr>
 									<td class="align-middle">@count</td>
 									<td class="align-middle">@item.ByProduct.Name</td>
-									<td class="align-middle">@item.ByProductQuantity</td>
+									<td class="align-middle">
+										<div class="input-group d-flex justify-content-center">
+											<a class="btn fa fa-minus fa-small" aria-hidden="true" id="productMinus" asp-action="RemoveFromBasket" asp-controller="Baskets" asp-route-byProductId="@item.ByProduct.Id" asp-route-removeAll="0"></a>
+											<span class="input-group-text" data-productQuantity="@item.ByProductQuantity" id="productQuantity">@item.ByProductQuantity</span>
+											<a class="btn fa fa-plus fa-small" aria-hidden="true" id="productPlus" asp-action="AddToBasket" asp-controller="Baskets" asp-route-byProductId="@item.ByProduct.Id"></a>
+										</div>
+									</td>
 									<td class="align-middle">@item.ByProduct.Price</td>
 									<td class="align-middle">@(item.ByProduct.Price * item.ByProductQuantity)</td>
-									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" href="/Baskets/RemoveFromBasket/@item.ByProduct.Id"><i class="fa fa-times"></i></a></td>
+									<td></td>
+									<td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" asp-action="RemoveFromBasket" asp-route-byProductId="@item.ByProduct.Id" asp-route-removeAll="1"><i class="fa fa-times"></i></a></td>
 								</tr>
 							}
 						}
@@ -130,8 +156,34 @@
 							<h5><span id="totalpricewithkdv">@basketTotalPriceWithTax</span>₺</h5>
 						</div>
 						<br />
-						<a id="btnchecked" class="btn btn-block btn-warning font-weight-bold my-3" asp-controller="Baskets" asp-action="AddToOrder">Siparişi Tamamla</a>
+						@{
+							if (Model.Basket.BasketLines.Count > 0)
+							{
+								<a id="btnchecked" class="btn btn-block btn-warning font-weight-bold my-3" asp-controller="Baskets" asp-action="AddToOrder">Siparişi Tamamla</a>
+							}
+							else
+							{
+								<button class="btn btn-block btn-warning font-weight-bold my-3" disabled>Siparişi Tamamla</button>
+							}
+						}
+
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalToggleLabel">Sipariş Detay</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -145,25 +197,146 @@
 
 </html>
 
-@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+
 <script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var modalBody = document.querySelector('.modal-body');
+		var description = `@Model.Basket.BasketLines.FirstOrDefault()?.Description`;
 
-	$('#btnchecked').click(function () {
+		if (description !== null && description !== undefined) {
 
-		var basketData = @liste;
+			description = description.replace(/&#xA;/g, '\n').replace(/&#xD;/g, '\r');
+			var lines = description.split('\n\r\n');
+			var table = document.createElement('table');
+			table.classList.add('table');
 
-		$.ajax({
-			type: 'POST',
-			url: 'Baskets/AddToBasket',
-			data: basketData,
-			dataType:"Json",
-			success: function (data) {
-				alert("Güncelleme Başarılı");
-			},
-			error: function (error) {
-				alert("Hata");
-			}
-		});
+			var thead = document.createElement('thead');
+			var tr = document.createElement('tr');
+
+			var th1 = document.createElement('th');
+			th1.textContent = 'Ürün Adı';
+
+			var th2 = document.createElement('th');
+			th2.textContent = 'Değer';
+
+			tr.appendChild(th1);
+			tr.appendChild(th2);
+			thead.appendChild(tr);
+			table.appendChild(thead);
+
+			var tbody = document.createElement('tbody');
+			lines.forEach(function (line) {
+				var tr = document.createElement('tr');
+
+				if (line.includes(':')) {
+					var parts = line.split(':');
+					var td1 = document.createElement('td');
+					var td2 = document.createElement('td');
+
+					td1.innerHTML = parts[0].trim();
+					var value = parts[1].trim();
+					td2.innerHTML = value;
+
+					if (value.toLowerCase() === 'var') {
+						tr.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+						td2.innerHTML = '<i class="fa fa-check"></i>';
+					} else if (value.toLowerCase() === 'yok') {
+						td2.innerHTML = '<i class="fa fa-close"></i>';
+						tr.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+					}
+
+					td2.style.textAlign = 'center';
+
+					tr.appendChild(td1);
+					tr.appendChild(td2);
+				} else {
+					var td = document.createElement('td');
+					td.innerHTML = line.trim();
+					tr.appendChild(td);
+				}
+
+				tbody.appendChild(tr);
+			});
+
+			table.appendChild(tbody);
+			modalBody.appendChild(table);
+
+		} else {
+			modalBody.innerHTML = '<p>No description available</p>';
+		}
+	});
+</script>
+
+
+<script>
+	const minusButton = document.getElementById('burgerMinus');
+	const plusButton = document.getElementById('burgerPlus');
+	const quantityDisplay = document.getElementById('burgerQuantity');
+	const burgerQuantitySpan = document.getElementById('burgerQuantity');
+	const burgerQuantityData = burgerQuantitySpan.getAttribute('data-burgerQuantity');
+	let quantity = burgerQuantityData;
+	quantityDisplay.textContent = quantity;
+
+	plusButton.addEventListener('click', () => {
+		if (quantity < 10) {
+			quantity++;
+			quantityDisplay.textContent = quantity;
+		}
 	});
 
-</script>*@
+	minusButton.addEventListener('click', () => {
+		if (quantity > 1) {
+			quantity--;
+			quantityDisplay.textContent = quantity;
+		}
+	});
+</script>
+
+<script>
+	const menuMinusButton = document.getElementById('menuMinus');
+	const menuPlusButton = document.getElementById('menuPlus');
+	const menuQuantityDisplay = document.getElementById('menuQuantity');
+	const menuQuantitySpan = document.getElementById('menuQuantity');
+	const menuQuantityData = menuQuantitySpan.getAttribute('data-menuQuantity');
+	let menuQuantity = menuQuantityData;
+	menuQuantityDisplay.textContent = menuQuantity;
+
+	menuPlusButton.addEventListener('click', () => {
+		if (menuQuantity < 10) {
+			menuQuantity++;
+			menuQuantityDisplay.textContent = menuQuantity;
+		}
+	});
+
+	menuMinusButton.addEventListener('click', () => {
+		if (menuQuantity > 1) {
+			menuQuantity--;
+			menuQuantityDisplay.textContent = menuQuantity;
+		}
+	});
+</script>
+
+<script>
+	const productMinusButton = document.getElementById('productMinus');
+	const productPlusButton = document.getElementById('productPlus');
+	const productQuantityDisplay = document.getElementById('productQuantity');
+	const productQuantitySpan = document.getElementById('productQuantity');
+	const productQuantityData = productQuantitySpan.getAttribute('data-productQuantity');
+	let productQuantity = productQuantityData;
+	productQuantityDisplay.textContent = productQuantity;
+
+	productPlusButton.addEventListener('click', () => {
+		if (productQuantity < 10) {
+			productQuantity++;
+			productQuantityDisplay.textContent = productQuantity;
+		}
+	});
+
+	productMinusButton.addEventListener('click', () => {
+		if (productQuantity > 1) {
+			productQuantity--;
+			productQuantityDisplay.textContent = productQuantity;
+		}
+	});
+</script>

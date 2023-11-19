@@ -1,7 +1,7 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.DomainModels;
 
-namespace KatmanliBurger_WebUI.Models
+namespace KatmanliBurger_UI.Models
 {
 	public class OrderListViewModel
 	{

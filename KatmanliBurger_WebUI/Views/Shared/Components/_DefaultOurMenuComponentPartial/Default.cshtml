@@ -4,11 +4,11 @@
 	<div class="container">
 		<div class="heading_container heading_center">
 			<h2>
-				Our Menu
+				Menülerimiz
 			</h2>
 		</div>
 		<ul class="filters_menu">
-			<li class="active" data-filter="*">All</li>
+			<li class="active" data-filter="*">Tümü</li>
 			<li data-filter=".menu">Menü</li>
 			<li data-filter=".burger">Burger</li>
 			@foreach (var item in Model.Categories)
@@ -37,7 +37,7 @@
 										<h6>
 											@item.Price
 										</h6>
-										<a asp-action="AddToBasket" asp-controller="Baskets" asp-route-menuId="@item.Id">
+										<a asp-action="Index" asp-controller="MenuUI" asp-route-id="@item.Id">
 											<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
 											<g>
 											<g>

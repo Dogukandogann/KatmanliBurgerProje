@@ -1,11 +1,13 @@
 ﻿using KatmanliBurger_DATA.Concretes;
-using KatmanliBurger_WebUI.Models;
+using KatmanliBurger_UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
-    public class RoleController : Controller
+	[Authorize(Roles = "Admin")]
+	public class RoleController : Controller
 	{
 		private readonly RoleManager<AppRole> _roleManager;
 		private readonly UserManager<AppUser> _userManager;

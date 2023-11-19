@@ -1,0 +1,70 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Sipariş İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Sipariş Listesi</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Siparişleri buradan görebilirsiniz. 
+                        </div>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Müşteri Id</th>
+                                    <th scope="col">Sipariş No</th>
+                                    <th scope="col">Sipariş Tarihi</th>
+                                    <th scope="col">Toplam Tutar</th>
+                                    <th scope="col">Sipariş Durumu</th>
+                                    <th scope="col">Akif/Pasif</th>
+                                    <th scope="col">Detay</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                               @foreach (var item in Model)
+                               {
+                                    <tr>
+                                        <td></td>
+                                        <td>@item.UserId</td>
+                                        <td>@item.Id</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.TotalPrice</td>
+                                        <td>
+                                            @{
+                                              var deger=item.Status == Status.Active ? "Hazırlanıyor" : "Teslim Edildi";
+                                            }
+                                            @deger
+                                            </td>
+                                        @if (item.Status == Status.Active)
+                                        {
+                                            <td><a href="/Order/Delete/@item.Id" class="btn btn-outline-danger">Pasifleştir</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="/Order/Delete/@item.Id" class="btn btn-outline-success">Aktifleştir</a></td>
+                                        }
+                                        <td><a href="/Order/Details/@item.Id" class="btn btn-outline-success">Detaylar</a></td>
+
+                                    </tr>
+                                }
+                                 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

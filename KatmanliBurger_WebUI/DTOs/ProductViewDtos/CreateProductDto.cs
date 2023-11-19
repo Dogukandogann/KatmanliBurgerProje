@@ -1,4 +1,4 @@
-﻿namespace KatmanliBurger_WebUI.DTOs.ProductViewDtos
+﻿namespace KatmanliBurger_UI.DTOs.ProductViewDtos
 {
 	public class CreateProductDto
 	{

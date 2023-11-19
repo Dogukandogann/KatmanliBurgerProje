@@ -9,17 +9,19 @@ using KatmanliBurger_SERVICE.Services.BurgerOrderMappingServices;
 using KatmanliBurger_SERVICE.Services.BurgerServices;
 using KatmanliBurger_SERVICE.Services.ByProductServices;
 using KatmanliBurger_SERVICE.Services.CategoryServices;
+using KatmanliBurger_SERVICE.Services.CustomerMessageServices;
 using KatmanliBurger_SERVICE.Services.GarnitureServices;
 using KatmanliBurger_SERVICE.Services.MenuByProductMappingServices;
 using KatmanliBurger_SERVICE.Services.MenuOrderMappingServices;
 using KatmanliBurger_SERVICE.Services.MenuServices;
 using KatmanliBurger_SERVICE.Services.OrderByProductMappingServices;
 using KatmanliBurger_SERVICE.Services.OrderServices;
-using KatmanliBurger_WebUI.Helpers;
+using KatmanliBurger_SERVICE.Services.ParameterServices;
+using KatmanliBurger_UI.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
-namespace KatmanliBurger_WebUI
+namespace KatmanliBurger_UI
 {
 	public class Program
 	{
@@ -38,9 +40,7 @@ namespace KatmanliBurger_WebUI
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
-			//builder.Services.AddautoMapper(Assembly.GetExecutingAssembly());
-			
-
+			builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 			builder.Services.AddDbContext<BurgerDbContext>();
 
@@ -82,10 +82,18 @@ namespace KatmanliBurger_WebUI
 			builder.Services.AddScoped<IOrderByProductMappingDal, EfOrderByProductMappingDal>();
 			builder.Services.AddScoped<IOrderByProductMappingService, OrderByProductMappingManager>();
 
+			builder.Services.AddScoped<ICustomerMessageDal, EfCustomerMessageDal>();
+			builder.Services.AddScoped<ICustomerMessageService, CustomerMessageManager>();
+
 			builder.Services.AddScoped<IBasketService, BasketManager>();
 
 			builder.Services.AddScoped<IBasketSessionHelper, BasketSessionHelper>();
 			builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+			builder.Services.AddScoped<IParameterDal, EfParameterDal>();
+			builder.Services.AddScoped<IParameterService, ParameterManager>();
+			builder.Services.AddScoped<IParameterSessionHelper, ParameterSessionHelper>();
+
 			builder.Services.AddSession();
 
 			builder.Services.AddAuthentication();
@@ -100,7 +108,7 @@ namespace KatmanliBurger_WebUI
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
-
+			app.UseStatusCodePagesWithRedirects("/Error/ErrorPage/?{0}");
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseSession();

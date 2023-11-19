@@ -2,12 +2,14 @@
 using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_SERVICE.Services.BurgerServices;
 using KatmanliBurger_SERVICE.Services.GarnitureServices;
-using KatmanliBurger_WebUI.DTOs.BurgerViewDtos;
+using KatmanliBurger_UI.DTOs.BurgerViewDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
-    public class BurgerController : Controller
+	[Authorize(Roles ="Admin")]
+	public class BurgerController : Controller
     {
 		IBurgerService _burgerService;
 		IGarnitureService _garnitureService;

@@ -6,6 +6,7 @@ namespace KatmanliBurger_DATA.Concretes
     {
         public decimal TotalPrice { get; set; }
         public string UserId { get; set; }
+        public string? Description { get; set; }
 
         //nav
         public virtual AppUser User { get; set; }

@@ -1,6 +1,6 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 
-namespace KatmanliBurger_WebUI.DTOs.MenuViewDtos
+namespace KatmanliBurger_UI.DTOs.MenuViewDtos
 {
     public class MenuUpdateDtos
     {

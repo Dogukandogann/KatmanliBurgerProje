@@ -1,4 +1,4 @@
-﻿namespace KatmanliBurger_WebUI.DTOs.CategoryViewDtos
+﻿namespace KatmanliBurger_UI.DTOs.CategoryViewDtos
 {
     public class CategoryDto
     {

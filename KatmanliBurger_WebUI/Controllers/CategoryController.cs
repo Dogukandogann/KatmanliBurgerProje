@@ -1,9 +1,11 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_SERVICE.Services.CategoryServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class CategoryController : Controller
 	{
 		ICategoryService _categoryService;

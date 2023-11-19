@@ -27,6 +27,11 @@ namespace KatmanliBurger_SERVICE.Services.ByProductServices
 			return _byProductDal.GetById(id);
 		}
 
+		public IEnumerable<ByProduct> GetByIdList(List<int> ids)
+		{
+			return _byProductDal.GetByIdList(ids);
+		}
+
 		public List<ByProduct> GetProductsWithCategories()
 		{
 			return _byProductDal.GetProductsWithCategories();

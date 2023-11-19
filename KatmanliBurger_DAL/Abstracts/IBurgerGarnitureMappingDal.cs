@@ -9,6 +9,8 @@ namespace KatmanliBurger_DAL.Abstracts
         void Update(IEnumerable<BurgerGarnitureMapping> entities);
 
         IEnumerable<BurgerGarnitureMapping> GetByBurgerId(int id);
+        IEnumerable<BurgerGarnitureMapping> GetByBurgerIds(List<int> burgerIds);
+      
         void Delete(IEnumerable<BurgerGarnitureMapping> entities);
     }
 }

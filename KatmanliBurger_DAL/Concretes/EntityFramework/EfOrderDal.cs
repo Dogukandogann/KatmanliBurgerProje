@@ -11,7 +11,7 @@ namespace KatmanliBurger_DAL.Concretes.EntityFramework
 		{
 			using (BurgerDbContext context = new BurgerDbContext())
 			{
-				var orderWithDetails = context.Orders.Include(o => o.BurgerOrders).ThenInclude(bo => bo.Burger).Include(o => o.MenuOrders).ThenInclude(mo => mo.Menu).Include(o => o.OrderByProducts).ThenInclude(obp => obp.ByProduct).FirstOrDefault(o => o.Id == orderId);
+				var orderWithDetails = context.Orders.Include(o => o.BurgerOrders).ThenInclude(bo => bo.Burger).Include(o => o.MenuOrders).ThenInclude(mo => mo.Menu).Include(o => o.OrderByProducts).ThenInclude(obp => obp.ByProduct).Include(u=>u.User).FirstOrDefault(o => o.Id == orderId);
 
 				return orderWithDetails;
 			}

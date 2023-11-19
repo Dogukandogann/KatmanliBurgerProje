@@ -28,6 +28,11 @@ namespace KatmanliBurger_SERVICE.Services.GarnitureServices
 			return _garnitureDal.GetById(id);
 		}
 
+		public IEnumerable<Garniture> GetByIdList(List<int> ids)
+		{
+			return _garnitureDal.GetByIdList(ids);
+		}
+
 		public void Update(Garniture entity)
 		{
 			entity.UpdatedDate = DateTime.Now;

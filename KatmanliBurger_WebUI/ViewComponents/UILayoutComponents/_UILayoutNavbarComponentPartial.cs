@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.ViewComponents.UILayoutComponents
+namespace KatmanliBurger_UI.ViewComponents.UILayoutComponents
 {
     public class _UILayoutNavbarComponentPartial:ViewComponent
     {

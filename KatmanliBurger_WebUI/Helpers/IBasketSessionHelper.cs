@@ -1,6 +1,6 @@
 ﻿using KatmanliBurger_DATA.DomainModels;
 
-namespace KatmanliBurger_WebUI.Helpers
+namespace KatmanliBurger_UI.Helpers
 {
     public interface IBasketSessionHelper
     {

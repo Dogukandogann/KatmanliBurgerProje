@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace KatmanliBurger_WebUI.Extensions
+namespace KatmanliBurger_UI.Extensions
 {
     public static class SessionExtensionMethods
     {

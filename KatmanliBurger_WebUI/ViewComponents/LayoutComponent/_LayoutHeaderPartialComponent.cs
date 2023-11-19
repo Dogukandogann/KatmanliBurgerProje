@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.ViewComponents.LayoutComponent
+namespace KatmanliBurger_UI.ViewComponents.LayoutComponent
 {
     public class _LayoutHeaderPartialComponent : ViewComponent
     {

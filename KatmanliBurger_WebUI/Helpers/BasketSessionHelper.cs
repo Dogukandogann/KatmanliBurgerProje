@@ -1,7 +1,7 @@
 ﻿using KatmanliBurger_DATA.DomainModels;
-using KatmanliBurger_WebUI.Extensions;
+using KatmanliBurger_UI.Extensions;
 
-namespace KatmanliBurger_WebUI.Helpers
+namespace KatmanliBurger_UI.Helpers
 {
     public class BasketSessionHelper : IBasketSessionHelper
     {

@@ -1,7 +1,7 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.Enums;
 
-namespace KatmanliBurger_WebUI.DTOs.ProductViewDtos
+namespace KatmanliBurger_UI.DTOs.ProductViewDtos
 {
 	public class ProductViewDto
 	{

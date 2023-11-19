@@ -8,7 +8,8 @@ namespace KatmanliBurger_SERVICE.Services.BurgerServices
         void Update(Burger entity);
         void UpdateStatus(int id);
         Burger GetById(int id);
-        IEnumerable<Burger> GetAll();
+		IEnumerable<Burger> GetByIdList(List<int> ids);
+		IEnumerable<Burger> GetAll();
         
     }
 }

@@ -1,6 +1,6 @@
 ﻿using KatmanliBurger_DATA.DomainModels;
 
-namespace KatmanliBurger_WebUI.Models
+namespace KatmanliBurger_UI.Models
 {
     public class BasketListViewModel
     {

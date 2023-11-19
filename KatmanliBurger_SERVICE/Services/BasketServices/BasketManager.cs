@@ -1,23 +1,10 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.DomainModels;
-using KatmanliBurger_SERVICE.Services.ByProductServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KatmanliBurger_SERVICE.Services.BasketServices
 {
 	public class BasketManager : IBasketService
 	{
-		private IByProductService _byProductService;
-
-		public BasketManager(IByProductService byProductService)
-		{
-			_byProductService = byProductService;
-		}
-
 		public void AddToBasket(Basket basket, ByProduct? product, Menu? menu, Burger? burger)
 		{
 
@@ -25,11 +12,9 @@ namespace KatmanliBurger_SERVICE.Services.BasketServices
 			{
 				BasketLine productBasketLine = basket.BasketLines.FirstOrDefault(c => c.ByProduct != null && c.ByProduct.Id == product?.Id);
 
-
 				if (productBasketLine != null)
 				{
 					productBasketLine.ByProductQuantity++;
-
 				}
 				else
 				{
@@ -69,19 +54,68 @@ namespace KatmanliBurger_SERVICE.Services.BasketServices
 			return basket.BasketLines;
 		}
 
-		public void RemoveFromBasket(Basket basket, int? productId, int? menuId, int? burgerId)
+		public void RemoveFromBasket(Basket basket, int? productId, int? menuId, int? burgerId, int? removeAll)
 		{
 			if (productId != 0)
 			{
-				basket.BasketLines.Remove(basket.BasketLines.FirstOrDefault(x => x.ByProduct.Id == productId));
+				var result = basket.BasketLines.FirstOrDefault(x => x.ByProductQuantity > 0 && x.ByProduct.Id == productId);
+				if (removeAll == 1)
+				{
+					basket.BasketLines.Remove(result);
+				}
+				else
+				{
+					if (result.ByProductQuantity > 1)
+					{
+						result.ByProductQuantity--;
+					}
+					else
+					{
+						basket.BasketLines.Remove(result);
+					}
+				}
+
 			}
 			if (menuId != 0)
 			{
-				basket.BasketLines.Remove(basket.BasketLines.FirstOrDefault(x => x.Menu.Id == menuId));
+				var result = basket.BasketLines.FirstOrDefault(x => x.MenuQuantity > 0 && x.Menu.Id == menuId);
+				if (removeAll == 1)
+				{
+					basket.BasketLines.Remove(result);
+				}
+				else
+				{
+					if (result.MenuQuantity > 1)
+					{
+						result.MenuQuantity--;
+					}
+					else
+					{
+						basket.BasketLines.Remove(result);
+					}
+				}
+
 			}
 			if (burgerId != 0)
 			{
-				basket.BasketLines.Remove(basket.BasketLines.FirstOrDefault(x => x.Burger.Id == burgerId));
+				var result = basket.BasketLines.FirstOrDefault(x => x.BurgerQuantity > 0 && x.Burger.Id == burgerId);
+				if (removeAll == 1)
+				{
+					basket.BasketLines.Remove(result);
+				}
+				else
+				{
+					if (result.BurgerQuantity > 1)
+					{
+						result.BurgerQuantity--;
+					}
+					else
+					{
+						basket.BasketLines.Remove(result);
+					}
+				}
+
+
 			}
 		}
 	}

@@ -1,19 +1,23 @@
-﻿using KatmanliBurger_DAL.Abstracts;
-using KatmanliBurger_SERVICE.Services.BurgerServices;
-using KatmanliBurger_SERVICE.Services.ByProductServices;
-using KatmanliBurger_SERVICE.Services.CategoryServices;
-using KatmanliBurger_SERVICE.Services.MenuServices;
-using KatmanliBurger_WebUI.DTOs.MenuProductViewDtos;
+﻿using KatmanliBurger_UI.Helpers;
+using KatmanliBurger_UI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.ViewComponents.DefaultComponents
+namespace KatmanliBurger_UI.ViewComponents.DefaultComponents
 {
-    public class _DefaultAboutComponentPartial : ViewComponent
+	public class _DefaultAboutComponentPartial : ViewComponent
     {
-       
-        public IViewComponentResult Invoke()
+		private readonly IParameterSessionHelper _parameterSessionHelper;
+
+		public _DefaultAboutComponentPartial(IParameterSessionHelper parameterSessionHelper)
+		{
+			_parameterSessionHelper = parameterSessionHelper;
+		}
+
+		public IViewComponentResult Invoke()
         {
-            return View();
+			ParameterListViewModel model = new ParameterListViewModel() { ParameterDetails = _parameterSessionHelper.GetParameters("ParameterDetails") };
+			
+			return View(model);
         }
     }
 }

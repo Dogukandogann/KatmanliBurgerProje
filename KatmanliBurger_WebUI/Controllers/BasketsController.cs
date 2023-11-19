@@ -8,12 +8,14 @@ using KatmanliBurger_SERVICE.Services.MenuOrderMappingServices;
 using KatmanliBurger_SERVICE.Services.MenuServices;
 using KatmanliBurger_SERVICE.Services.OrderByProductMappingServices;
 using KatmanliBurger_SERVICE.Services.OrderServices;
-using KatmanliBurger_WebUI.Helpers;
-using KatmanliBurger_WebUI.Models;
+using KatmanliBurger_UI.Helpers;
+using KatmanliBurger_UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Text;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
 	public class BasketsController : Controller
 	{
@@ -44,36 +46,88 @@ namespace KatmanliBurger_WebUI.Controllers
 
 		public IActionResult Index()
 		{
+			if (User.Identity.IsAuthenticated)
+			{
+				TempData["message"] = " Logout";
+				TempData["adress"] = "/Default/Logout";
+			}
+			else
+			{
+				TempData["message"] = " Login";
+				TempData["adress"] = "/Login/Index";
+			}
+
 			var model = new BasketListViewModel
 			{
 				Basket = _basketSessionHelper.GetBasket("basket")
 			};
+			
 			return View(model);
 		}
 
-		public IActionResult AddToBasket(int byProductId = default, int menuId = default, int burgerId = default)
+		public IActionResult AddToBasket(int byProductId = default, int menuId = default, int burgerId = default, int menuQuantity = default, string allMenuDescription = default, float menuPrice = default)
 		{
-			//Sepetten ürünü çek idye göre
 			ByProduct product = _byProductManager.GetById(byProductId);
 			Menu menu = _menuManager.GetById(menuId);
 			Burger burger = _burgerManager.GetById(burgerId);
 
 			var basket = _basketSessionHelper.GetBasket("basket");
+
 			_basketManager.AddToBasket(basket, product, menu, burger);
+
+			if (menuId != default && (menuQuantity != default || allMenuDescription != default || menuPrice!=default))
+			{
+				var basketLine = basket.BasketLines.Where(x => x.Menu.Id == menuId).FirstOrDefault();
+
+				if (menuQuantity != 0)
+				{
+					basketLine.MenuQuantity = menuQuantity;
+				}
+
+				if (allMenuDescription != default)
+				{
+					basketLine.Description = RefactorDescription(allMenuDescription);
+				}
+
+                if (menuPrice!=default)
+                {
+					basketLine.Menu.Price = (decimal)menuPrice;
+                }
+            }
+
 			_basketSessionHelper.SetBasket("basket", basket);
 
 			return RedirectToAction("Index", "Baskets");
 		}
 
-		public IActionResult RemoveFromBasket(int byProductId = default, int menuId = default, int burgerId = default)
+		private string RefactorDescription(string allMenuDescription)
 		{
-			//Sepetten ürünü çek idye göre
-			//ByProduct product = _byProductManager.GetById(byProductId);
-			//Menu menu = _menuManager.GetById(menuId);
-			//Burger burger = _burgerManager.GetById(burgerId);
+			string[] lines = allMenuDescription.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+			StringBuilder modifiedDescription = new StringBuilder();
 
+			foreach (string line in lines)
+			{
+				string formattedLine = line.EndsWith('\n') ? line : $"{line}\n";
+				string[] parts = formattedLine.Split(':');
+
+				if (parts[0].Contains('-'))
+				{
+					int burgerId = int.Parse(parts[0].Split('-')[0].Trim());
+					string burgerName = _burgerManager.GetById(burgerId).Name;
+					modifiedDescription.AppendLine($"{burgerName}-{parts[0].Split('-')[1]}:{parts[1]}");
+				}
+				else
+				{
+					modifiedDescription.AppendLine(formattedLine);
+				}
+			}
+
+			return modifiedDescription.ToString();
+		}
+		public IActionResult RemoveFromBasket(int byProductId = default, int menuId = default, int burgerId = default, int removeAll = default)
+		{
 			var basket = _basketSessionHelper.GetBasket("basket");
-			_basketManager.RemoveFromBasket(basket, byProductId, menuId, burgerId);
+			_basketManager.RemoveFromBasket(basket, byProductId, menuId, burgerId, removeAll);
 			_basketSessionHelper.SetBasket("basket", basket);
 
 			return RedirectToAction("Index");
@@ -81,18 +135,12 @@ namespace KatmanliBurger_WebUI.Controllers
 
 		public IActionResult AddToOrder()
 		{
+			Basket basket = _basketSessionHelper.GetBasket("basket");
 			OrderListViewModel model = new OrderListViewModel();
-			Order newOrder = new Order() { UserId = "e768f722-5d9f-40dd-a8ed-a7e9a19d9238" };
+			Order newOrder = new Order() { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) };
 			_orderManager.Create(newOrder);
 
-
-			
-
-
-
 			var order = _orderManager.GetById(newOrder.Id);
-
-			Basket basket = _basketSessionHelper.GetBasket("basket");
 
 			foreach (var item in basket.BasketLines)
 			{
@@ -137,8 +185,10 @@ namespace KatmanliBurger_WebUI.Controllers
 					order.TotalPrice += item.ByProductQuantity * item.ByProduct.Price * 1.1m;
 					_orderByProductMappingManager.Create(order.OrderByProducts);
 				}
-			}
 
+				order.Description = item.Description;
+			}
+			
 			_orderManager.Update(order);
 
 			model.OrderNo = order.Id;
@@ -149,13 +199,20 @@ namespace KatmanliBurger_WebUI.Controllers
 
 		public async Task<IActionResult> CompletedOrderList(OrderListViewModel model)
 		{
-			_basketSessionHelper.Clear();
-			var order = _orderManager.GetById(model.OrderNo);
-			AppUser user = await _userManager.FindByIdAsync(order.UserId);
-			model.AppUser = user;
-			var orders=_orderManager.GetAll().Where(x=>x.UserId==model.AppUser.Id).ToList();
-			model.Orders= _orderManager.OrderWithDetailList(orders);
-			return View(model);
-		}
+            _basketSessionHelper.Clear();
+			AppUser user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (user!=null)
+            {
+				model.AppUser = user;
+				var orders = _orderManager.GetAll().Where(x => x.UserId == model.AppUser.Id).ToList();
+				model.Orders = _orderManager.OrderWithDetailList(orders);
+				return View(model);
+			}
+            else
+            {
+				return RedirectToAction("Index", "Login");
+            }
+
+        }
 	}
 }

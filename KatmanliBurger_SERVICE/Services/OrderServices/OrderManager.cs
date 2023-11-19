@@ -47,7 +47,7 @@ namespace KatmanliBurger_SERVICE.Services.OrderServices
 		public void UpdateStatus(int id)
 		{
 			var order = _orderDal.GetById(id);
-			order.Status = order.Status == Status.Active ? Status.Active : Status.Passive;
+			order.Status = order.Status == Status.Active ? Status.Passive : Status.Active;
 			order.UpdatedDate = DateTime.Now;
 			_orderDal.Update(order);
 		}

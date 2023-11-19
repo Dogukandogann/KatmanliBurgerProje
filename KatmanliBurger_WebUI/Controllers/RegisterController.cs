@@ -1,9 +1,9 @@
 ﻿using KatmanliBurger_DATA.Concretes;
-using KatmanliBurger_WebUI.Models;
+using KatmanliBurger_UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
 	public class RegisterController : Controller
 	{
@@ -45,9 +45,15 @@ namespace KatmanliBurger_WebUI.Controllers
 					IdentityResult identityResult = await _userManager.CreateAsync(appUser, model.Password);
 					if (identityResult.Succeeded)
 					{
-						//string userId = appUser.Id;
-						//string userRoleId = _userRole.Roles.FirstOrDefault(x => x.Name.Equals("user")).ToString();
-						await _userManager.AddToRoleAsync(appUser, "User");
+						if (appUser.Email == "admin@admin.com")
+						{
+							await _userManager.AddToRoleAsync(appUser, "Admin");
+						}
+                        else
+                        {
+                        await _userManager.AddToRoleAsync(appUser, "User");
+
+						}
 						return RedirectToAction("Index", "Login");
 					}
 					else

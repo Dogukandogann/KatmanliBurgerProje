@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KatmanliBurger_Service\KatmanliBurger_Service.csproj" />
+    <ProjectReference Include="..\KatmanliBurger_SERVICE\KatmanliBurger_SERVICE.csproj" />
   </ItemGroup>
 
 </Project>

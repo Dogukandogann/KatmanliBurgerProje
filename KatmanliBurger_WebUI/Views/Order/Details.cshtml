@@ -1,0 +1,59 @@
+﻿@model Order
+@{
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+	<div class="container-fluid">
+		<h4 class="page-title">Sipariş Detayları</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						@* <div class="card-title">Sipariş Listesi</div>*@
+					</div>
+					<div class="card-body">
+						<div class="card-sub">
+							Sipariş detaylarını buradan görebilirsiniz.
+						</div>
+						<table class="table mt-3">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Müşteri Mail</th>
+									<th scope="col">Müşteri Adres</th>
+									<th scope="col">Menüler</th>
+									<th scope="col">Burgerlar</th>
+									<th scope="col">Yan Ürünler</th>
+									<th scope="col">Açıklama</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td></td>
+									<td>@Model.User.UserName</td>
+									<td>@Model.User.Address</td>
+									<td>
+										@String.Join(", ", Model.MenuOrders.Select(order => order.Menu.Name))
+									</td>
+									<td>
+										@String.Join(", ", Model.BurgerOrders.Select(order => order.Burger.Name))
+									</td>
+									<td>
+										@String.Join(", ", Model.OrderByProducts.Select(order => order.ByProduct.Name))
+									</td>
+									<td>@Model.Description</td>
+
+								</tr>
+
+							</tbody>
+						</table>
+						<td><a href="/Order/Index/" class="btn btn-outline-success">Siparişlere Dön</a></td>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

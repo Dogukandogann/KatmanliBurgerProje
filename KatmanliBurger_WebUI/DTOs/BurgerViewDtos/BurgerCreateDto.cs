@@ -1,6 +1,6 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 
-namespace KatmanliBurger_WebUI.DTOs.BurgerViewDtos
+namespace KatmanliBurger_UI.DTOs.BurgerViewDtos
 {
 	public class BurgerCreateDto
 	{

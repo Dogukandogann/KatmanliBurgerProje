@@ -3,11 +3,13 @@ using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.Enums;
 using KatmanliBurger_SERVICE.Services.ByProductServices;
 using KatmanliBurger_SERVICE.Services.CategoryServices;
-using KatmanliBurger_WebUI.DTOs.ProductViewDtos;
+using KatmanliBurger_UI.DTOs.ProductViewDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KatmanliBurger_WebUI.Controllers
+namespace KatmanliBurger_UI.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class ByProductController : Controller
 	{
 		IByProductService _byProductService;
