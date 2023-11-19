@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using KatmanliBurger_DAL.Abstracts;
 using KatmanliBurger_DAL.Concretes.EntityFramework;
 using KatmanliBurger_DAL.Contexts;
@@ -17,7 +19,10 @@ using KatmanliBurger_SERVICE.Services.MenuServices;
 using KatmanliBurger_SERVICE.Services.OrderByProductMappingServices;
 using KatmanliBurger_SERVICE.Services.OrderServices;
 using KatmanliBurger_SERVICE.Services.ParameterServices;
+using KatmanliBurger_UI.DTOs.BurgerViewDtos;
 using KatmanliBurger_UI.Helpers;
+using KatmanliBurger_UI.ValidationRules.BurgerDtosValidations;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
@@ -28,6 +33,7 @@ namespace KatmanliBurger_UI
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+
 			builder.Services.AddIdentity<AppUser, AppRole>(
 	 option =>
 	 {
@@ -39,8 +45,11 @@ namespace KatmanliBurger_UI
 	 }).AddEntityFrameworkStores<BurgerDbContext>().AddRoleManager<RoleManager<AppRole>>();
 
 			// Add services to the container.
-			builder.Services.AddControllersWithViews();
+			builder.Services.AddControllersWithViews().AddFluentValidation(option => option.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())).ConfigureApiBehaviorOptions(opt => opt.SuppressModelStateInvalidFilter = true);
 			builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+			
+
 
 			builder.Services.AddDbContext<BurgerDbContext>();
 
@@ -96,7 +105,15 @@ namespace KatmanliBurger_UI
 
 			builder.Services.AddSession();
 
-			builder.Services.AddAuthentication();
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+			{
+				options.LoginPath = "/Login/Index";
+				//options.AccessDeniedPath = "/Book/Index";
+
+			});
+
+
+			//builder.Services.AddAuthentication();
 			builder.Services.AddAuthorization();
 
 			var app = builder.Build();

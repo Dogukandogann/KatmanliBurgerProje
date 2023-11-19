@@ -1,5 +1,6 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_SERVICE.Services.CategoryServices;
+using KatmanliBurger_UI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,37 +23,81 @@ namespace KatmanliBurger_UI.Controllers
 		}
         public IActionResult CreateByCategory()
         {
-            Category model = new();
-            return View(model);
+            try
+            {
+				Category model = new();
+				return View(model);
+			}
+            catch (Exception)
+            {
+				TempData["hata"] = ErrorMessageProvider.GetErrorMessage("Genel_Hata");
+				return RedirectToAction("Index", "Category");
+			}
+           
         }
 		[HttpPost]
         public IActionResult CreateByCategory(Category model)
         {
+            try
+            {
+				_categoryService.Create(model);
+				return RedirectToAction("Index");
+			}
+            catch (Exception)
+            {
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Kayit_Basarisiz");
+				return RedirectToAction("Index", "Category");
+			}
 			
-			_categoryService.Create(model);
-			return RedirectToAction("Index");
+			
         }
         public IActionResult Edit(int id)
         {
-            var category = _categoryService.GetById(id);
-         
-            return View(category);
+            try
+            {
+				var category = _categoryService.GetById(id);
+
+				return View(category);
+			}
+            catch (Exception)
+            {
+				TempData["hata"] = ErrorMessageProvider.GetErrorMessage("Genel_Hata");
+				return RedirectToAction("Index", "Category");
+			}
+            
         }
         [HttpPost]
         public IActionResult Edit(Category model, int id)
         {
-            var category = _categoryService.GetById(id);
-           category.Name= model.Name;
+			try
+			{
+				var category = _categoryService.GetById(id);
+				category.Name = model.Name;
 
-            _categoryService.Update(model);
+				_categoryService.Update(model);
 
-            return RedirectToAction("Index");
+				return RedirectToAction("Index");
+			}
+			catch (Exception)
+			{
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Guncelleme_Basarisiz");
+				return RedirectToAction("Index", "Category");
+			}
+           
         }
         public IActionResult Delete(int id)
         {
-
-            _categoryService.UpdateStatus(id);
-            return RedirectToAction("Index");
+			try
+			{
+				_categoryService.UpdateStatus(id);
+				return RedirectToAction("Index");
+			}
+			catch (Exception)
+			{
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Silme_Basarisiz");
+				return RedirectToAction("Index", "Category");
+			}
+            
 
         }
     }

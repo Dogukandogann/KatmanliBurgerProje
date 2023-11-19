@@ -1,13 +1,7 @@
 ﻿using KatmanliBurger_DAL.Abstracts;
 using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_DATA.Enums;
-using KatmanliBurger_SERVICE.Services.BurgerGarnitureMappingServices;
-using KatmanliBurger_SERVICE.Services.BurgerMenuMappingServices;
-using KatmanliBurger_SERVICE.Services.BurgerServices;
-using KatmanliBurger_SERVICE.Services.ByProductServices;
 using KatmanliBurger_SERVICE.Services.DTOs;
-using KatmanliBurger_SERVICE.Services.GarnitureServices;
-using KatmanliBurger_SERVICE.Services.MenuByProductMappingServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace KatmanliBurger_SERVICE.Services.MenuServices
@@ -97,6 +91,7 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 
 			return menuDto;
 		}
+
 		public void UpdateMenu(MenuDto dto, int menuId, int[] selectedburgers, int[] selectedcitilezzetler, int[] selectedicecekler, int[] selectedtatlilar)
 		{
 			var selectedMenu = _menuDal.GetById(menuId);//menü getir
@@ -105,9 +100,9 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 			_menuDal.Update(selectedMenu);
 			var burgerMapping = _burgerMenuMappingDal.GetByMenuId(menuId);//menü burger ara tablosunu getir
 			int[] allProducts = selectedcitilezzetler
-										.Concat(selectedicecekler)
-										.Concat(selectedtatlilar)
-										.ToArray();
+		  .Concat(selectedicecekler)
+		  .Concat(selectedtatlilar)
+		  .ToArray();
 			var productMapping = _menuProductMappingDal.GetByMenuId(menuId);
 			foreach (var item in selectedburgers)
 			{
@@ -120,7 +115,6 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 					};
 					_burgerMenuMappingDal.Create(burgerMenuMapping);
 				}
-
 			}
 			foreach (var item in burgerMapping)
 			{
@@ -141,7 +135,6 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 					};
 					_menuProductMappingDal.Create(productMenuMapping);
 				}
-
 			}
 			foreach (var item in productMapping)
 			{
@@ -150,9 +143,6 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 					_menuProductMappingDal.Delete(_menuProductMappingDal.GetAll().Where(x => x.Id == item.Id).ToList());
 				}
 			}
-
 		}
-
-
 	}
 }

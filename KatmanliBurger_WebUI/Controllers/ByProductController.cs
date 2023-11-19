@@ -4,6 +4,7 @@ using KatmanliBurger_DATA.Enums;
 using KatmanliBurger_SERVICE.Services.ByProductServices;
 using KatmanliBurger_SERVICE.Services.CategoryServices;
 using KatmanliBurger_UI.DTOs.ProductViewDtos;
+using KatmanliBurger_UI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +15,11 @@ namespace KatmanliBurger_UI.Controllers
 	{
 		IByProductService _byProductService;
 		ICategoryService _categoryService;
-		IMapper _mapper;
 
-		public ByProductController(IByProductService byProductService, ICategoryService categoryService, IMapper mapper)
+		public ByProductController(IByProductService byProductService, ICategoryService categoryService)
 		{
 			_byProductService = byProductService;
             _categoryService = categoryService;
-			_mapper = mapper;
 		}
 
 		public IActionResult Index()
@@ -28,62 +27,106 @@ namespace KatmanliBurger_UI.Controllers
 			var products = _byProductService.GetProductsWithCategories();
 			return View(products);
 		}
+
 		public IActionResult CreateByProduct()
 		{
-			ProductEditDto model = new();
-			model.Categories = (List<Category>)_categoryService.GetAll();
-			model.Size = new List<Size>() { Size.Small, Size.Medium, Size.Large };
-			return View(model);
+			try
+			{
+				ProductEditDto model = new();
+				model.Categories = (List<Category>)_categoryService.GetAll();
+				model.Size = new List<Size>() { Size.Small, Size.Medium, Size.Large };
+				return View(model);
+			}
+			catch (Exception)
+			{
+				TempData["hata"] = ErrorMessageProvider.GetErrorMessage("Genel_Hata");
+				return RedirectToAction("Index", "ByProduct");
+			}
 		}
+
 		[HttpPost]
         public IActionResult CreateByProduct(ProductEditDto model)
         {
-			ByProduct product = new()
+			try
 			{
-				Name=model.ByProduct.Name,
-				Price=model.ByProduct.Price,
-				Image=model.ByProduct.Image,
-				Description=model.ByProduct.Description,
-				Size=model.ByProduct.Size,
-				Piece=model.ByProduct.Piece,
-				CategoryId=model.ByProduct.CategoryId,
-			};
-			_byProductService.Create(product);
-            return RedirectToAction("Index");
+				ByProduct product = new()
+				{
+					Name = model.ByProduct.Name,
+					Price = model.ByProduct.Price,
+					Image = model.ByProduct.Image,
+					Description = model.ByProduct.Description,
+					Size = model.ByProduct.Size,
+					Piece = model.ByProduct.Piece,
+					CategoryId = model.ByProduct.CategoryId,
+				};
+				_byProductService.Create(product);
+
+				return RedirectToAction("Index");
+			}
+			catch (Exception)
+			{
+
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Kayit_Basarisiz");
+				return RedirectToAction("Index", "ByProduct");
+			}
         }
         public IActionResult Edit(int id)
 		{
-			ProductEditDto productViewDto = new ProductEditDto()
+			try
 			{
-				ByProduct = _byProductService.GetById(id),
-				Categories = (List<Category>)_categoryService.GetAll(),
-				Size = new List<Size>() { Size.Small,Size.Medium,Size.Large }
-			};           
-			return View(productViewDto);
+				ProductEditDto productViewDto = new ProductEditDto()
+				{
+					ByProduct = _byProductService.GetById(id),
+					Categories = (List<Category>)_categoryService.GetAll(),
+					Size = new List<Size>() { Size.Small, Size.Medium, Size.Large }
+				};
+				return View(productViewDto);
+			}
+			catch (Exception)
+			{
+
+				TempData["hata"] = ErrorMessageProvider.GetErrorMessage("Genel_Hata");
+				return RedirectToAction("Index", "ByProduct");
+			}
 		}
+
 		[HttpPost]
         public IActionResult Edit(ProductEditDto model , int id)
         {
-            var product = _byProductService.GetById(id);
-			product.Name = model.ByProduct.Name;
-			product.Price=model.ByProduct.Price;
-			product.Description = model.ByProduct.Description;
-			product.CategoryId = model.ByProduct.CategoryId;
-			product.Size = model.ByProduct.Size;
-			product.Image = model.ByProduct.Image;
+			try
+			{
+				var product = _byProductService.GetById(id);
+				product.Name = model.ByProduct.Name;
+				product.Price = model.ByProduct.Price;
+				product.Description = model.ByProduct.Description;
+				product.CategoryId = model.ByProduct.CategoryId;
+				product.Size = model.ByProduct.Size;
+				product.Image = model.ByProduct.Image;
 
-			_byProductService.Update(product);
+				_byProductService.Update(product);
 
-            return RedirectToAction("Index");
+				return RedirectToAction("Index");
+			}
+			catch (Exception)
+			{
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Guncelleme_Basarisiz");
+				return RedirectToAction("Index", "ByProduct");
+			}
         }
+
 		public IActionResult Delete(int id)
 		{
-
-			_byProductService.UpdateStatus(id);
-			return RedirectToAction("Index");
-
+			try
+			{
+				_byProductService.UpdateStatus(id);
+				return RedirectToAction("Index");
+			}
+			catch (Exception)
+			{
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Silme_Basarisiz");
+				return RedirectToAction("Index", "ByProduct");
+			}
 		}
-
 	}
 }
 

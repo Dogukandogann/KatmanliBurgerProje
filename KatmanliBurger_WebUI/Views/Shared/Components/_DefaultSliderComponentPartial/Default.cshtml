@@ -1,4 +1,6 @@
-﻿<section class="slider_section ">
+﻿@using KatmanliBurger_UI.Helpers;
+
+<section class="slider_section ">
     <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -10,7 +12,8 @@
                                     Katmanlı Burger
                                 </h1>
                                 <p>
-                                    Fifty Shades Of Error List! ekibinin çabalarıyla kısa sürede oluşturulan MVC projesinde çok büyük emekler vardır. Emeği geçen herkese teşekkürler.
+
+                                    @ErrorMessageProvider.GetErrorMessage("Slider_Aciklama1")
                                 </p>
                                 <div class="btn-box">
                                 </div>
@@ -28,7 +31,7 @@
                                     Katmanlı Burger
                                 </h1>
                                 <p>
-                                    Diyet yapmaktan korkanların kaçmak isteyeceği adres. Burada çok farklı lezzetler(!) tadacaksınız. Ürünlerimiz son derece sağlıklı olup yüksek miktarda kalori içermektedir. Uzun süre maruz kalındığında bağımlılık etkisi yapacaktır.
+                                    @ErrorMessageProvider.GetErrorMessage("Slider_Aciklama2")
                                 </p>
 
                             </div>
@@ -45,7 +48,7 @@
                                     Katmanlı Burger
                                 </h1>
                                 <p>
-                                    Projede Katmanlı Yapı Mimarisi kullanılmıştır. Clean Code Prensiplerine önem verilmiştir. Kısa zamanda hazırlanan bu projeyi yeterince incelerseniz MVC yapısını tamamen çözekseniz ;)
+                                    @ErrorMessageProvider.GetErrorMessage("Slider_Aciklama3")
                                 </p>
 
                             </div>

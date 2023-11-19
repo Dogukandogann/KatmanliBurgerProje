@@ -61,7 +61,7 @@ namespace KatmanliBurger_UI.Controllers
 			{
 				Basket = _basketSessionHelper.GetBasket("basket")
 			};
-			
+
 			return View(model);
 		}
 
@@ -70,12 +70,10 @@ namespace KatmanliBurger_UI.Controllers
 			ByProduct product = _byProductManager.GetById(byProductId);
 			Menu menu = _menuManager.GetById(menuId);
 			Burger burger = _burgerManager.GetById(burgerId);
-
 			var basket = _basketSessionHelper.GetBasket("basket");
-
 			_basketManager.AddToBasket(basket, product, menu, burger);
 
-			if (menuId != default && (menuQuantity != default || allMenuDescription != default || menuPrice!=default))
+			if (menuId != default && (menuQuantity != default || allMenuDescription != default || menuPrice != default))
 			{
 				var basketLine = basket.BasketLines.Where(x => x.Menu.Id == menuId).FirstOrDefault();
 
@@ -89,11 +87,11 @@ namespace KatmanliBurger_UI.Controllers
 					basketLine.Description = RefactorDescription(allMenuDescription);
 				}
 
-                if (menuPrice!=default)
-                {
+				if (menuPrice != default)
+				{
 					basketLine.Menu.Price = (decimal)menuPrice;
-                }
-            }
+				}
+			}
 
 			_basketSessionHelper.SetBasket("basket", basket);
 
@@ -124,6 +122,7 @@ namespace KatmanliBurger_UI.Controllers
 
 			return modifiedDescription.ToString();
 		}
+
 		public IActionResult RemoveFromBasket(int byProductId = default, int menuId = default, int burgerId = default, int removeAll = default)
 		{
 			var basket = _basketSessionHelper.GetBasket("basket");
@@ -133,86 +132,113 @@ namespace KatmanliBurger_UI.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult AddToOrder()
+		public async Task<IActionResult> AddToOrder()
 		{
-			Basket basket = _basketSessionHelper.GetBasket("basket");
-			OrderListViewModel model = new OrderListViewModel();
-			Order newOrder = new Order() { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) };
-			_orderManager.Create(newOrder);
-
-			var order = _orderManager.GetById(newOrder.Id);
-
-			foreach (var item in basket.BasketLines)
+			try
 			{
-				if (item.Burger is not null)
-				{
-					order.BurgerOrders = new List<BurgerOrderMapping>()
-					{
-					   new BurgerOrderMapping
-					   {
-						BurgerId=item.Burger.Id,
-						OrderId=order.Id
-					   }
-					};
-					order.TotalPrice += item.BurgerQuantity * item.Burger.Price * 1.1m;
-					_burgerOrderMappingManager.Create(order.BurgerOrders);
+				Basket basket = _basketSessionHelper.GetBasket("basket");
+				OrderListViewModel model = new OrderListViewModel();
+				AppUser user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-				}
-				if (item.Menu is not null)
+				if (user != null)
 				{
-					order.MenuOrders = new List<MenuOrderMapping>()
+					Order newOrder = new Order() { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) };
+					_orderManager.Create(newOrder);
+					var order = _orderManager.GetById(newOrder.Id);
+
+					foreach (var item in basket.BasketLines)
 					{
-						new MenuOrderMapping
+						if (item.Burger is not null)
 						{
-							MenuId=item.Menu.Id,
-							OrderId=order.Id
-						}
-					};
-					order.TotalPrice += item.MenuQuantity * item.Menu.Price * 1.1m;
-					_menuOrderMappingManager.Create(order.MenuOrders);
-				}
+							order.BurgerOrders = new List<BurgerOrderMapping>()
+								{
+								   new BurgerOrderMapping
+								   {
+									BurgerId=item.Burger.Id,
+									OrderId=order.Id
+								   }
+								};
 
-				if (item.ByProduct is not null)
-				{
-					order.OrderByProducts = new List<OrderByProductMapping>
-					{
-						new OrderByProductMapping
+							order.TotalPrice += item.BurgerQuantity * item.Burger.Price * 1.1m;
+							_burgerOrderMappingManager.Create(order.BurgerOrders);
+						}
+
+						if (item.Menu is not null)
 						{
-							ByProductId=item.ByProduct.Id,
-							OrderId = order.Id
-						}
-					};
-					order.TotalPrice += item.ByProductQuantity * item.ByProduct.Price * 1.1m;
-					_orderByProductMappingManager.Create(order.OrderByProducts);
-				}
+							order.MenuOrders = new List<MenuOrderMapping>()
+								{
+									new MenuOrderMapping
+									{
+										MenuId=item.Menu.Id,
+										OrderId=order.Id
+									}
+								};
 
-				order.Description = item.Description;
+							order.TotalPrice += item.MenuQuantity * item.Menu.Price * 1.1m;
+							_menuOrderMappingManager.Create(order.MenuOrders);
+						}
+
+						if (item.ByProduct is not null)
+						{
+							order.OrderByProducts = new List<OrderByProductMapping>
+								{
+									new OrderByProductMapping
+									{
+										ByProductId=item.ByProduct.Id,
+										OrderId = order.Id
+									}
+								};
+
+							order.TotalPrice += item.ByProductQuantity * item.ByProduct.Price * 1.1m;
+							_orderByProductMappingManager.Create(order.OrderByProducts);
+						}
+
+						order.Description = item.Description;
+					}
+
+					_orderManager.Update(order);
+					model.OrderNo = order.Id;
+					model.TotalPrice = order.TotalPrice;
+					TempData["info"] = "Kapat";
+
+					return RedirectToAction("CompletedOrderList", model);
+				}
+				else
+				{
+					return RedirectToAction("Index", "Login");
+				}
 			}
-			
-			_orderManager.Update(order);
-
-			model.OrderNo = order.Id;
-			model.TotalPrice = order.TotalPrice;
-			TempData["info"] = "Kapat";
-			return RedirectToAction("CompletedOrderList", model);
+			catch (Exception)
+			{
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Kayit_Basarisiz");
+				return RedirectToAction("Index", "Baskets");
+			}
 		}
 
 		public async Task<IActionResult> CompletedOrderList(OrderListViewModel model)
 		{
-            _basketSessionHelper.Clear();
-			AppUser user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            if (user!=null)
-            {
-				model.AppUser = user;
-				var orders = _orderManager.GetAll().Where(x => x.UserId == model.AppUser.Id).ToList();
-				model.Orders = _orderManager.OrderWithDetailList(orders);
-				return View(model);
-			}
-            else
-            {
-				return RedirectToAction("Index", "Login");
-            }
+			try
+			{
+				_basketSessionHelper.Clear();
+				AppUser user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        }
+				if (user != null)
+				{
+					model.AppUser = user;
+					var orders = _orderManager.GetAll().Where(x => x.UserId == model.AppUser.Id).ToList();
+					model.Orders = _orderManager.OrderWithDetailList(orders);
+					return View(model);
+				}
+				else
+				{
+					return RedirectToAction("Index", "Login");
+				}
+			}
+			catch (Exception)
+			{
+				TempData["hata"] = ErrorMessageProvider.GetErrorMessage("Genel_Hata");
+				return RedirectToAction("Index", "Baskets");
+			}
+		}
 	}
 }

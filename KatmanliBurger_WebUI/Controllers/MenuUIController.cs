@@ -1,5 +1,4 @@
 ﻿using KatmanliBurger_SERVICE.Services.MenuServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KatmanliBurger_UI.Controllers

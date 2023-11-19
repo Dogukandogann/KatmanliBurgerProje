@@ -19,12 +19,14 @@ div class="content">
                         <div class="form-group">
                             <label for="Name">Ürün Adı:</label>
                             <input type="text" class="form-control" asp-for="Name" id="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label for="Price">Fiyat:</label>
                             <input type="text" class="form-control" asp-for="Price" id="Price">
+                            <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="card-body">

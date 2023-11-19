@@ -77,3 +77,18 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (TempData["exception"] != null)
+    {
+        <text>
+            Swal.fire("@TempData["exception"]");
+        </text>
+    }
+    @if (TempData["hata"] != null)
+    {
+        <text>
+            Swal.fire("@TempData["hata"]");
+        </text>
+    }
+</script>

@@ -1,4 +1,6 @@
 ﻿using KatmanliBurger_DATA.Concretes;
+using KatmanliBurger_UI.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace KatmanliBurger_UI.DTOs.BurgerViewDtos
 {

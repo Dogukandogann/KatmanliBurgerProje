@@ -1,4 +1,5 @@
 ﻿using KatmanliBurger_DATA.Concretes;
+using KatmanliBurger_UI.Helpers;
 using KatmanliBurger_UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,50 +29,60 @@ namespace KatmanliBurger_UI.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Register(UserRegisterVM model)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				if (model.ConfirmPassword == model.Password)
+				if (ModelState.IsValid)
 				{
-					AppUser appUser = new AppUser()
+					if (model.ConfirmPassword == model.Password)
 					{
-						Email = model.Email,
-						FirstName = model.FirstName,
-						LastName = model.LastName,
-						Address = model.Adress,
-						UserName = model.Email,
-
-					};
-
-					IdentityResult identityResult = await _userManager.CreateAsync(appUser, model.Password);
-					if (identityResult.Succeeded)
-					{
-						if (appUser.Email == "admin@admin.com")
+						AppUser appUser = new AppUser()
 						{
-							await _userManager.AddToRoleAsync(appUser, "Admin");
-						}
-                        else
-                        {
-                        await _userManager.AddToRoleAsync(appUser, "User");
+							Email = model.Email,
+							FirstName = model.FirstName,
+							LastName = model.LastName,
+							Address = model.Adress,
+							UserName = model.Email,
 
+						};
+
+						IdentityResult identityResult = await _userManager.CreateAsync(appUser, model.Password);
+						if (identityResult.Succeeded)
+						{
+							if (appUser.Email == "admin@admin.com")
+							{
+								await _userManager.AddToRoleAsync(appUser, "Admin");
+							}
+							else
+							{
+								await _userManager.AddToRoleAsync(appUser, "User");
+
+							}
+							return RedirectToAction("Index", "Login");
 						}
-						return RedirectToAction("Index", "Login");
+						else
+						{
+							foreach (var error in identityResult.Errors)
+							{
+								ModelState.AddModelError("", error.Description);
+							}
+						}
 					}
 					else
 					{
-						foreach (var error in identityResult.Errors)
-						{
-							ModelState.AddModelError("", error.Description);
-						}
+						ModelState.AddModelError("", "Şifreler uyuşmuyor.");
+						return View();
 					}
-				}
-				else
-				{
-					ModelState.AddModelError("", "Şifreler uyuşmuyor.");
-					return View();
-				}
 
+				}
+				return View(model);
 			}
-			return View(model);
+			catch (Exception)
+			{
+
+				TempData["exception"] = ErrorMessageProvider.GetErrorMessage("Kayit_Basarisiz");
+				return RedirectToAction("Register", "Register");
+			}
+			
 		}
 	}
 }

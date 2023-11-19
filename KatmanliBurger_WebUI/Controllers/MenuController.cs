@@ -120,23 +120,18 @@ namespace KatmanliBurger_UI.Controllers
 		public IActionResult Update(int id)
 		{
 			var model = _menuService.GetMenu(id);
-
 			return View(model);
 		}
 		[HttpPost]
 		public IActionResult Update(MenuDto dto, int id, int[] selectedburgers, int[] selectedcitilezzetler, int[] selectedicecekler, int[] selectedtatlilar)
 		{
 			_menuService.UpdateMenu(dto, id, selectedburgers, selectedcitilezzetler, selectedicecekler, selectedtatlilar);
-
 			return RedirectToAction("Index");
 		}
 		public IActionResult Delete(int id)
 		{
-
 			_menuService.UpdateStatus(id);
 			return RedirectToAction("Index");
-
 		}
-
 	}
 }

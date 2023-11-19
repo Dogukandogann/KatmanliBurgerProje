@@ -11,6 +11,6 @@ namespace KatmanliBurger_SERVICE.Services.MenuServices
 		Menu GetById(int id);
 		IEnumerable<Menu> GetAll();
 		MenuDto GetMenu(int menuId);
-		public void UpdateMenu(MenuDto dto, int menuId, int[] selectedburgers, int[] selectedcitilezzetler, int[] selectedicecekler, int[] selectedtatlilar);
+		void UpdateMenu(MenuDto dto, int menuId, int[] selectedburgers, int[] selectedcitilezzetler, int[] selectedicecekler, int[] selectedtatlilar);
 	}
 }

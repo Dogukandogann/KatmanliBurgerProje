@@ -1,6 +1,5 @@
 ﻿using KatmanliBurger_DATA.Concretes;
 using KatmanliBurger_UI.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
