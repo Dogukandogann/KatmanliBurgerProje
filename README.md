@@ -13,9 +13,9 @@
   <li>Mimari Tasarım: N-Tier Katmanlı Mimari</li>
   <li>Veri Tabanı: Ms SQL Server</li>
   <li>Veri Erişim Teknolojisi: Entity Framework CORE (CodeFirst) , Linq</li>
-  <li>Arayüz Tasarımı: HTML5, CSS3, Javascript, JQuery, Ajax, Bootstrap5/li>
-  <li>Diğer Özellikler: DTO, ViewModel, AutoMapper, FluentValidation, Identity,Partial Views, View Components, Repository Design Pattern , Dependency Injection/li>
-  <li>Versiyon Kontrol Sistemi: Git/li>
+  <li>Arayüz Tasarımı: HTML5, CSS3, Javascript, JQuery, Ajax, Bootstrap</li>
+  <li>Diğer Özellikler: DTO, ViewModel, AutoMapper, FluentValidation, Identity,Partial Views, View Components, Repository Design Pattern , Dependency Injection</li>
+  <li>Versiyon Kontrol Sistemi: Git</li>
 </ul>
 <h2>Images</h2>
 <img src="https://github.com/Dogukandogann/KatmanliBurgerProje/assets/134203440/5c5c92be-beb5-4a86-865d-2a8ff8c2111b" alt="1" style="max-width: 100%;">
