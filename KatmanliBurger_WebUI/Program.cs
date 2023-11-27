@@ -56,8 +56,11 @@ namespace KatmanliBurger_UI
 			builder.Services.AddScoped<IBurgerDal, EfBurgerDal>();
 			builder.Services.AddScoped<IBurgerService, BurgerManager>();
 
+            builder.Services.AddScoped<IParameterDal, EfParameterDal>();
+            builder.Services.AddScoped<IParameterService, ParameterManager>();
 
-			builder.Services.AddScoped<IMenuService, MenuManager>();
+
+            builder.Services.AddScoped<IMenuService, MenuManager>();
 			builder.Services.AddScoped<IMenuDal, EfMenuDal>();
 
 			builder.Services.AddScoped<IByProductDal, EfByProductDal>();

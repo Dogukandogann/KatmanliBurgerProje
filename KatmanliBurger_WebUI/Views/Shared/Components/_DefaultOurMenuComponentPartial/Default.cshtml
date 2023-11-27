@@ -11,14 +11,14 @@
             <li class="active" data-filter="*">Tümü</li>
             <li data-filter=".menu">Menü</li>
             <li data-filter=".burger">Burger</li>
-            @foreach (var item in Model.Categories)
+            @foreach (var item in Model.Categories.Where(x=>x.Status==Status.Active))
             {
                 <li data-filter=".@item.Id">@item.Name</li>
             }
         </ul>
         <div class="filters-content">
             <div class="row grid">
-                @foreach (var item in Model.Menus)
+                @foreach (var item in Model.Menus.Where(x => x.Status == Status.Active))
                 {
                     <div class="col-sm-6 col-lg-4 all menu">
                         <div class="box" style="height:25rem">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 }
-                @foreach (var item in Model.Burgers)
+                @foreach (var item in Model.Burgers.Where(x => x.Status == Status.Active))
                 {
                     <div class="col-sm-6 col-lg-4 all burger">
                         <div class="box" style="height:25rem">
@@ -178,7 +178,7 @@
                 }
                 @foreach (var category in Model.Categories)
                 {
-                    @foreach (var item in Model.ByProducts)
+                    @foreach (var item in Model.ByProducts.Where(x => x.Status == Status.Active))
                     {
 
 

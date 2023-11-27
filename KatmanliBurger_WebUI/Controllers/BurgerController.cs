@@ -55,7 +55,7 @@ namespace KatmanliBurger_UI.Controllers
 				{
 					var garnitures = _garnitureService.GetAll();
 					model.Garnitures = garnitures;
-					return View(model);
+					//return View(model);
 				}
 
 				Burger burger = new()

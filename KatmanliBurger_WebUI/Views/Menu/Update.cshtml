@@ -1,0 +1,133 @@
+﻿@model MenuDto
+@{
+
+Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Menü İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" asp-action="Update">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Menü  Düzenle</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">İsim</label>
+                                <input type="text" class="form-control" asp-for="Menu.Name" id="Name">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Burger Seçimi:</label>
+                                @foreach (var item in Model.Burgers)
+                                {
+
+
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedburgers" checked>
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+
+
+                                }
+                                @foreach (var item in Model.AllBurgers.Except(Model.AllBurgers.Where(x => Model.Burgers.Select(y => y.Id).ToList().Contains(x.Id))))
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedburgers">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Çıtır Lezzet Seçimi:</label>
+                                @foreach (var item in Model.Byproducts.Where(x => x.CategoryId == 2).ToList())
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedcitilezzetler" checked>
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                                @foreach (var item in Model.AllByproducts.Where(x => x.CategoryId == 2).ToList().Except(Model.AllByproducts.Where(x => Model.Byproducts.Select(y => y.Id).ToList().Contains(x.Id))))
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedcitilezzetler">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">İçecek Seçimi:</label>
+                                @foreach (var item in Model.Byproducts.Where(x => x.CategoryId == 1).ToList())
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedicecekler" checked>
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                                @foreach (var item in Model.AllByproducts.Where(x => x.CategoryId == 1).ToList().Except(Model.AllByproducts.Where(x => Model.Byproducts.Select(y => y.Id).ToList().Contains(x.Id))))
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedicecekler">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Tatlı Seçimi:</label>
+                                @foreach (var item in Model.Byproducts.Where(x => x.CategoryId == 3).ToList())
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedtatlilar" checked>
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                                @foreach (var item in Model.AllByproducts.Where(x => x.CategoryId == 3).ToList().Except(Model.AllByproducts.Where(x => Model.Byproducts.Select(y => y.Id).ToList().Contains(x.Id))))
+                                {
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@item.Id" name="selectedtatlilar">
+                                        <span class="form-check-sign">@item.Name</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Price">Fiyat:</label>
+                                <input type="text" class="form-control" asp-for="Menu.Price" id="Price">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Image">Burger Görsel</label>
+                                <input type="text" class="form-control" asp-for="Menu.Image" id="Image">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Ürün Açıklaması:</label>
+                                <input type="text" class="form-control" asp-for="Menu.Description" id="Description">
+
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <button class="btn btn-primary" type="submit">Menü Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

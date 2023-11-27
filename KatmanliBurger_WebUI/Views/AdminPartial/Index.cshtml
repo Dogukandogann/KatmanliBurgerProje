@@ -1,0 +1,47 @@
+﻿@model List<ParameterDetail>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+<div class="content">
+	<div class="container-fluid">
+		<h4 class="page-title">Hamburger İşlemleri</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">Ürün Listesi</div>
+					</div>
+					<div class="card-body">
+						<div class="card-sub">
+							Hamburger işlemlerini aşağıdan gerçekleştirebilirsiniz.
+						</div>
+						<table class="table mt-3">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Bölüm</th>
+									<th scope="col">Description</th>
+									<th scope="col">Güncelle</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>@item.Code</td>
+										<td>@item.Description</td>
+
+										<td><a href="/AdminPartial/Details/@item.Id" class="btn btn-outline-success">Güncelle</a></td>
+									</tr>
+								}
+							</tbody>
+						</table>
+						<a href="/Burger/CreateBurger/" class="btn btn-outline-primary">Yeni Hamburger Oluştur</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

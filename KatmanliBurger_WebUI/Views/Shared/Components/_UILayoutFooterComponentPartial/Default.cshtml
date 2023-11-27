@@ -1,4 +1,5 @@
-﻿<footer class="footer_section">
+﻿@using KatmanliBurger_UI.Helpers;
+<footer class="footer_section">
     <div class="container">
         <div class="row">
             <div class="col-md-4 footer-col">
@@ -16,13 +17,13 @@
                         <a href="">
                             <i class="fa fa-phone" aria-hidden="true"></i>
                             <span>
-                                Ara +90 5389601155
+                                @ErrorMessageProvider.GetErrorMessage("Footer_Phone")
                             </span>
                         </a>
                         <a href="">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <span>
-                                katmanli_burger@gmail.com
+                                @ErrorMessageProvider.GetErrorMessage("Footer_Mail")
                             </span>
                         </a>
                     </div>
@@ -34,7 +35,7 @@
                         Katmanlı Burger
                     </a>
                     <p>
-                        Uluslararası kalite standartlarında üretim, hijyen ve hizmetten ödün vermeyen, TAB Gıda güvencesiyle Türkiye genelinde hizmet veren Katmanlı burger®️, Türkiye’deki markalaşma yolculuğunda sayısız başarıya imza atmıştır.
+                        @ErrorMessageProvider.GetErrorMessage("Footer_Aciklama1")
                     </p>
                     <div class="footer_social">
                         <a href="">
