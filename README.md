@@ -1,4 +1,4 @@
-<h1>Katmanlı Burger</h1>
+<h1>Hava Durumu</h1>
 <h2>Description</h2>
 <p>Bu proje, React eğitimi kapsamında geliştirilmiş bir örnek projedir. Axios kütüphanesi kullanılarak, girilen şehre göre 4 günlük hava durumu bilgilerini sunar.</p>
 
