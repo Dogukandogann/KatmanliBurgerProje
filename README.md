@@ -1,7 +1,7 @@
 <h1>Katmanlı Burger</h1>
 <h2>Description</h2>
 <p> Burger siparişi verme sürecini optimize ederek müşterilere hızlı ve güvenilir bir sipariş deneyimi sunmak, projemizin öncelikli amaçları arasında yer almaktadır. Ziyaretçilerimiz ürünleri görüntüleme , inceleme , içeriği özelleştirme , sepete ekleme ve sepet içeriğini düzenleme işlemlerini gerçekleştirebilir ancak sipariş tamamlayabilmek için üye olmaları veya üye girişi yapmaları gerekmektedir.
-<p>Bu proje, React eğitimi kapsamında geliştirilmiş bir örnek projedir. Axios kütüphanesi kullanılarak, girilen şehre göre 4 günlük hava durumu bilgilerini sunar.</p>
+
 
 👨‍👩‍👧‍👦 Kayıtlı kullanıcılarımız geçmiş sipariş detaylarını görüntüleyebilir , istek ve şikayetleri için bize ulaşın bölümünden mesaj atabilirler.
 
