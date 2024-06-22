@@ -18,6 +18,29 @@
   <li>Diğer Özellikler: DTO, ViewModel, AutoMapper, FluentValidation, Identity,Partial Views, View Components, Repository Design Pattern , Dependency Injection</li>
   <li>Versiyon Kontrol Sistemi: Git</li>
 </ul>
+
+<h1>English</h1>
+
+<h1>Layered Burger</h1>
+<h2>Description</h2>
+<p>Optimizing the process of ordering burgers to provide customers with a fast and reliable ordering experience is among the primary goals of our project. Our visitors can browse products, review them, customize content, add items to the cart, and manage cart contents. However, they need to register or log in to complete their orders.
+
+👨‍👩‍👧‍👦 Our registered users can view past order details and contact us for requests and complaints.
+
+🛠 Additionally, the site administrator can perform CRUD operations for products such as menu items, burgers, categories, and garnishes through the admin panel created for them. They can view and process user messages and orders. They can also edit the content of sliders, about sections, navigation bars, error messages, and information messages on the user interface through the site operations tab in the panel.</p>
+
+<h2>Technologies</h2>
+<ul>
+  <li>Development Environment: Visual Studio 2022</li>
+  <li>Code Base: C#, ASP.NET MVC, .NET Core 7</li>
+  <li>Architectural Design: N-Tier Architecture</li>
+  <li>Database: MS SQL Server</li>
+  <li>Data Access Technology: Entity Framework Core (CodeFirst), Linq</li>
+  <li>UI Design: HTML5, CSS3, JavaScript, jQuery, Ajax, Bootstrap</li>
+  <li>Other Features: DTO, ViewModel, AutoMapper, FluentValidation, Identity, Partial Views, View Components, Repository Design Pattern, Dependency Injection</li>
+  <li>Version Control System: Git</li>
+</ul>
+
 <h2>Images</h2>
 <img src="https://github.com/Dogukandogann/KatmanliBurgerProje/assets/134203440/5c5c92be-beb5-4a86-865d-2a8ff8c2111b" alt="1" style="max-width: 100%;">
 <img src="https://github.com/Dogukandogann/KatmanliBurgerProje/assets/134203440/0b829a90-b19d-434d-b24d-eb5d6fc43e6d" alt="1" style="max-width: 100%;">
