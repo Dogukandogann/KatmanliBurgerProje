@@ -1,12 +1,12 @@
 <h1>Katmanlı Burger</h1>
-<h2>Description</h2>
+<h2>Açıklama</h2>
 <p> Burger siparişi verme sürecini optimize ederek müşterilere hızlı ve güvenilir bir sipariş deneyimi sunmak, projemizin öncelikli amaçları arasında yer almaktadır. Ziyaretçilerimiz ürünleri görüntüleme , inceleme , içeriği özelleştirme , sepete ekleme ve sepet içeriğini düzenleme işlemlerini gerçekleştirebilir ancak sipariş tamamlayabilmek için üye olmaları veya üye girişi yapmaları gerekmektedir.
 
 
 👨‍👩‍👧‍👦 Kayıtlı kullanıcılarımız geçmiş sipariş detaylarını görüntüleyebilir , istek ve şikayetleri için bize ulaşın bölümünden mesaj atabilirler.
 
 🛠 Ayrıca, site yöneticisi kendisi için oluşturulmuş admin panelinden menü,hamburger,kategori,garnitür gibi ürünlerin CRUD işlemlerini gerçekleştirebilir , kullanıcı mesaj ve siparişlerini görüntüleyebilir ve işlem yapabilir. Kullanıcı ara yüzünde bulunan slider,about,navbar,hata ve bilgi mesajlarının içeriklerini panelde bulunan site işlemleri sekmesinden düzenleyebilir.</p>
-<h2>Tecnologies</h2>
+<h2>Teknolojiler</h2>
 <ul>
   <li>Geliştirme Ortamı: Visual Studio 2022
 </li>
